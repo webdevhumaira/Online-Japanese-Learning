@@ -1,0 +1,820 @@
+:root {
+    --deep-navy: #1A2B3C;
+    --japanese-red: #E63946;
+    --soft-gold: #FFD166;
+    --pure-white: #FFFFFF;
+    --sakura-pink: #FFB7C5;
+    --light-gray: #F5F5F5;
+    --medium-gray: #E0E0E0;
+    --dark-gray: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-gray);
+    background-color: var(--pure-white);
+    overflow-x: hidden;
+    position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+/* Custom Cursor */
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--japanese-red);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.cursor-border {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--soft-gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease, width 0.2s ease, height 0.2s ease;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(to right, var(--japanese-red), var(--soft-gold));
+    z-index: 10001;
+    transition: width 0.1s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--japanese-red), var(--deep-navy));
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, var(--deep-navy), var(--japanese-red));
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--japanese-red);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+}
+
+.scroll-to-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    background-color: var(--deep-navy);
+    transform: translateY(-5px);
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--deep-navy);
+    padding: 20px 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--pure-white) !important;
+}
+
+.navbar-brand span {
+    color: var(--japanese-red);
+}
+
+.nav-link {
+    color: var(--pure-white) !important;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--soft-gold) !important;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(26, 43, 60, 0.9), rgba(26, 43, 60, 0.95)),
+        url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-size: cover;
+    background-position: center;
+    color: var(--pure-white);
+    padding: 120px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-headline {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards 0.3s;
+}
+
+.hero-subheadline {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards 0.6s;
+}
+
+.hero-cta {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards 0.9s;
+}
+
+.cta-button {
+    background-color: var(--japanese-red);
+    color: var(--pure-white);
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
+}
+
+.cta-button:hover {
+    background-color: var(--pure-white);
+    color: var(--japanese-red);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
+}
+
+.cta-button-outline {
+    background-color: transparent;
+    border: 2px solid var(--soft-gold);
+    color: var(--soft-gold);
+}
+
+.cta-button-outline:hover {
+    background-color: var(--soft-gold);
+    color: var(--deep-navy);
+}
+
+/* Japanese Elements */
+.japanese-bg-element {
+    position: absolute;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.sakura-1 {
+    top: 10%;
+    left: 5%;
+    font-size: 8rem;
+    color: var(--sakura-pink);
+}
+
+.sakura-2 {
+    bottom: 15%;
+    right: 8%;
+    font-size: 6rem;
+    color: var(--sakura-pink);
+}
+
+.kanji-1 {
+    top: 20%;
+    right: 10%;
+    font-size: 5rem;
+    color: var(--soft-gold);
+    font-family: 'MS Mincho', serif;
+}
+
+.kanji-2 {
+    bottom: 20%;
+    left: 8%;
+    font-size: 4rem;
+    color: var(--soft-gold);
+    font-family: 'MS Mincho', serif;
+}
+
+/* Section Styling */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--japanese-red);
+    border-radius: 2px;
+}
+
+.section-padding {
+    padding: 100px 0;
+}
+
+/* About Sensei */
+.about-sensei {
+    background-color: var(--light-gray);
+}
+
+.sensei-img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.sensei-name {
+    color: var(--deep-navy);
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.sensei-title {
+    color: var(--japanese-red);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.sensei-experience {
+    background-color: var(--pure-white);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 25px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.experience-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.experience-icon {
+    background-color: var(--soft-gold);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--deep-navy);
+}
+
+.quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--deep-navy);
+    border-left: 4px solid var(--japanese-red);
+    padding-left: 20px;
+    margin-top: 25px;
+}
+
+/* Course Cards */
+.course-card {
+    background-color: var(--pure-white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    border-top: 5px solid var(--japanese-red);
+}
+
+.course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.course-header {
+    background-color: var(--deep-navy);
+    color: var(--pure-white);
+    padding: 25px 20px;
+}
+
+.course-name {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.course-duration {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.course-level {
+    display: inline-block;
+    background-color: var(--soft-gold);
+    color: var(--deep-navy);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.course-body {
+    padding: 25px 20px;
+}
+
+.course-feature {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.course-feature i {
+    color: var(--japanese-red);
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.course-btn {
+    background-color: var(--deep-navy);
+    color: var(--pure-white);
+    padding: 10px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.course-btn:hover {
+    background-color: var(--japanese-red);
+    color: var(--pure-white);
+}
+
+/* Class System */
+.class-system {
+    background-color: var(--deep-navy);
+    color: var(--pure-white);
+}
+
+.class-system .section-title {
+    color: var(--pure-white);
+}
+
+.class-system .section-title:after {
+    background-color: var(--soft-gold);
+}
+
+.feature-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 30px 20px;
+    text-align: center;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-card:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--japanese-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+}
+
+/* Why Choose Us */
+.usp-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.usp-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--soft-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+    color: var(--deep-navy);
+    font-size: 1.5rem;
+}
+
+/* Student Feedback */
+.feedback-section {
+    background-color: var(--light-gray);
+}
+
+.feedback-card {
+    background-color: var(--pure-white);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    height: 100%;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.student-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 3px solid var(--soft-gold);
+}
+
+.stars {
+    color: var(--soft-gold);
+    margin-bottom: 15px;
+}
+
+/* Enrollment Section */
+.enrollment-section {
+    background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+    color: var(--pure-white);
+}
+
+.contact-form {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.form-control,
+.form-select {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--pure-white);
+    padding: 12px 15px;
+    margin-bottom: 20px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--soft-gold);
+    box-shadow: 0 0 0 0.25rem rgba(255, 209, 102, 0.25);
+    color: var(--pure-white);
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.payment-methods {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.payment-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+    color: var(--soft-gold);
+}
+
+/* Exam System */
+.exam-level-card {
+    background-color: var(--pure-white);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    text-align: center;
+    border-top: 5px solid;
+    transition: all 0.3s ease;
+}
+
+.exam-level-card:hover {
+    transform: translateY(-10px);
+}
+
+.level-1 {
+    border-color: #28a745;
+}
+
+.level-2 {
+    border-color: #ffc107;
+}
+
+.exam-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.level-1 .exam-icon {
+    color: #28a745;
+}
+
+.level-2 .exam-icon {
+    color: #ffc107;
+}
+
+.quiz-container {
+    background-color: var(--pure-white);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.quiz-question {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.quiz-option {
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.quiz-option:hover {
+    background-color: var(--medium-gray);
+}
+
+.quiz-option.selected {
+    border-color: var(--japanese-red);
+    background-color: rgba(230, 57, 70, 0.05);
+}
+
+.quiz-timer {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--japanese-red);
+    margin-bottom: 20px;
+}
+
+/* Language Switcher */
+.language-switcher {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 1000;
+    background-color: var(--pure-white);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    width: 60px;
+    transition: width 0.3s ease;
+}
+
+.language-switcher:hover {
+    width: 180px;
+}
+
+.language-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-option:hover {
+    background-color: var(--light-gray);
+}
+
+.language-option.active {
+    background-color: var(--deep-navy);
+    color: var(--pure-white);
+}
+
+.language-flag {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    width: 30px;
+}
+
+.language-name {
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    color: var(--pure-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    z-index: 999;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+}
+
+/* Footer */
+footer {
+    background-color: var(--deep-navy);
+    color: var(--pure-white);
+    padding: 60px 0 30px;
+}
+
+.footer-logo {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--pure-white);
+}
+
+.footer-logo span {
+    color: var(--japanese-red);
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--soft-gold);
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--pure-white);
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: var(--japanese-red);
+    transform: translateY(-5px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .hero-headline {
+        font-size: 2.8rem;
+    }
+
+    .section-padding {
+        padding: 80px 0;
+    }
+
+    .language-switcher {
+        top: auto;
+        bottom: 120px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-headline {
+        font-size: 2.2rem;
+    }
+
+    .hero-subheadline {
+        font-size: 1.2rem;
+    }
+
+    .section-padding {
+        padding: 60px 0;
+    }
+
+    .sensei-img {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .cta-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+    }
+
+    .hero-headline {
+        font-size: 1.8rem;
+    }
+}

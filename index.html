@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/favicon-transparent.png" type="image/x-icon">
+    <title>Online Japanese Learning </title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-border"></div>
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    
+    <!-- Language Switcher -->
+    <!-- <div class="language-switcher">
+        <div class="language-option active" data-lang="en">
+            <div class="language-flag">🇺🇸</div>
+            <div class="language-name">English</div>
+        </div>
+        <div class="language-option" data-lang="bn">
+            <div class="language-flag">🇧🇩</div>
+            <div class="language-name">বাংলা</div>
+        </div>
+        <div class="language-option" data-lang="jp">
+            <div class="language-flag">🇯🇵</div>
+            <div class="language-name">日本語</div>
+        </div>
+    </div> -->
+    
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/8801XXXXXXXXX" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Nihongo<span>Master</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Sensei</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#class-system">Class System</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#why-us">Why Choose Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#exam">Exams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#enroll">Enroll</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="japanese-bg-element sakura-1">🌸</div>
+        <div class="japanese-bg-element sakura-2">🌸</div>
+        <div class="japanese-bg-element kanji-1">日</div>
+        <div class="japanese-bg-element kanji-2">本</div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="hero-content">
+                        <h1 class="hero-headline">Learn Japanese from Home with Expert Guidance</h1>
+                        <p class="hero-subheadline">Beginner to Conversational Japanese in just 6 months</p>
+                        <div class="hero-cta">
+                            <a href="#enroll" class="cta-button">🔴 Enroll Now / Free Trial Class</a>
+                            <a href="#courses" class="cta-button cta-button-outline">View Courses</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- Optional: Add an image or illustration here -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Sensei -->
+    <section class="about-sensei section-padding" id="about">
+        <div class="container">
+            <h2 class="section-title">Meet Your Sensei</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-4 text-center">
+                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sensei" class="sensei-img">
+                </div>
+                <div class="col-lg-8">
+                    <h3 class="sensei-name">Ahmed Hossain</h3>
+                    <p class="sensei-title">Japanese Language Instructor</p>
+                    <p>With over 10 years of experience living and studying in Japan, I bring authentic language and cultural insights to my teaching. I hold a JLPT N1 certification and have taught Japanese to over 500 students worldwide.</p>
+                    
+                    <div class="sensei-experience">
+                        <div class="experience-item">
+                            <div class="experience-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div>
+                                <h5>10+ Years Experience</h5>
+                                <p>Teaching Japanese to students from all backgrounds</p>
+                            </div>
+                        </div>
+                        <div class="experience-item">
+                            <div class="experience-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <h5>JLPT N1 Certified</h5>
+                                <p>Highest level of Japanese Language Proficiency</p>
+                            </div>
+                        </div>
+                        <div class="experience-item">
+                            <div class="experience-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h5>Lived in Japan</h5>
+                                <p>5 years in Tokyo, immersed in language and culture</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="quote">"I believe language connects cultures. Through Japanese, I help students not only learn a language but also understand and appreciate the rich culture of Japan."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Course Section -->
+    <section class="section-padding" id="courses">
+        <div class="container">
+            <h2 class="section-title">Our Courses</h2>
+            <div class="row g-4">
+                <!-- Course 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h4 class="course-name">Beginner Japanese</h4>
+                            <p class="course-duration">⏱ 6 Weeks</p>
+                            <span class="course-level">Beginner</span>
+                        </div>
+                        <div class="course-body">
+                            <h5>What you'll learn:</h5>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Hiragana & Katakana characters</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Basic greetings and introductions</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Essential grammar and sentence structure</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Everyday conversational phrases</div>
+                            </div>
+                            <a href="#" class="course-btn mt-3">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h4 class="course-name">Intermediate Japanese</h4>
+                            <p class="course-duration">⏱ 8 Weeks</p>
+                            <span class="course-level">Intermediate</span>
+                        </div>
+                        <div class="course-body">
+                            <h5>What you'll learn:</h5>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Kanji characters (150+ essential)</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Complex grammar and verb forms</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Conversational fluency development</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Reading and writing practice</div>
+                            </div>
+                            <a href="#" class="course-btn mt-3">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h4 class="course-name">Conversational Mastery</h4>
+                            <p class="course-duration">⏱ 10 Weeks</p>
+                            <span class="course-level">Advanced</span>
+                        </div>
+                        <div class="course-body">
+                            <h5>What you'll learn:</h5>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Advanced conversation skills</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Business Japanese etiquette</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>JLPT N3/N2 preparation</div>
+                            </div>
+                            <div class="course-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Cultural immersion and understanding</div>
+                            </div>
+                            <a href="#" class="course-btn mt-3">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Class System -->
+    <section class="class-system section-padding" id="class-system">
+        <div class="container">
+            <h2 class="section-title">Premium Class System</h2>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h4>Live Classes</h4>
+                        <p>Interactive sessions via Zoom/Google Meet with real-time feedback</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h4>Fixed Schedule</h4>
+                        <p>Regular class times to build consistency and discipline</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-video"></i>
+                        </div>
+                        <h4>Class Recordings</h4>
+                        <p>Access recorded sessions anytime for review and revision</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h4>PDF Notes</h4>
+                        <p>Comprehensive study materials for each lesson</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h4>Weekly Practice</h4>
+                        <p>Regular assignments and speaking practice sessions</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>1-on-1 Support</h4>
+                        <p>Personalized feedback and doubt clearing sessions</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h4>Progress Tracking</h4>
+                        <p>Regular assessments to monitor your improvement</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h4>Certificate</h4>
+                        <p>Recognized certificate upon course completion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why Choose Us -->
+    <section class="section-padding" id="why-us">
+        <div class="container">
+            <h2 class="section-title">Why Choose Nihongo Master?</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="usp-item">
+                        <div class="usp-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <div>
+                            <h4>Authentic Japanese Method</h4>
+                            <p>Learn with curriculum designed by native Japanese educators, focusing on real-life communication.</p>
+                        </div>
+                    </div>
+                    <div class="usp-item">
+                        <div class="usp-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h4>Experienced Instructor</h4>
+                            <p>Learn from a sensei with 10+ years of teaching experience and JLPT N1 certification.</p>
+                        </div>
+                    </div>
+                    <div class="usp-item">
+                        <div class="usp-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div>
+                            <h4>Learn from Home</h4>
+                            <p>Flexible online classes that fit your schedule, eliminating commute time and costs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="usp-item">
+                        <div class="usp-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div>
+                            <h4>Spoken Practice Focus</h4>
+                            <p>Emphasis on conversational skills with regular speaking practice and feedback.</p>
+                        </div>
+                    </div>
+                    <div class="usp-item">
+                        <div class="usp-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div>
+                            <h4>Certificate After Completion</h4>
+                            <p>Receive a recognized certificate that validates your Japanese language proficiency.</p>
+                        </div>
+                    </div>
+                    <div class="usp-item">
+                        <div class="usp-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h4>Small Class Sizes</h4>
+                            <p>Limited students per batch to ensure personalized attention and better learning.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Student Feedback -->
+    <section class="feedback-section section-padding">
+        <div class="container">
+            <h2 class="section-title">Student Success Stories</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feedback-card">
+                        <div class="student-info">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="Student" class="student-avatar">
+                            <div>
+                                <h5>Sarah Johnson</h5>
+                                <p>Beginner Course Graduate</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"I started with zero knowledge of Japanese. After 6 weeks, I can now read hiragana and katakana, and have basic conversations. Sensei's teaching method is incredible!"</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feedback-card">
+                        <div class="student-info">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="Student" class="student-avatar">
+                            <div>
+                                <h5>Michael Chen</h5>
+                                <p>Intermediate Course Student</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"The structured approach and weekly practice sessions have significantly improved my Japanese. I'm now confident enough to apply for jobs requiring Japanese language skills."</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feedback-card">
+                        <div class="student-info">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80" alt="Student" class="student-avatar">
+                            <div>
+                                <h5>Priya Sharma</h5>
+                                <p>Advanced Course Graduate</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Thanks to Nihongo Master, I passed JLPT N3 on my first attempt! The exam preparation materials and mock tests were extremely helpful. Highly recommended!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Exam System -->
+    <section class="section-padding" id="exam">
+        <div class="container">
+            <h2 class="section-title">Exam & Assessment System</h2>
+            <div class="row mb-5">
+                <div class="col-lg-6">
+                    <div class="exam-level-card level-1">
+                        <div class="exam-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3>Level 1: Simple Online Quiz</h3>
+                        <p>Perfect for beginners and weekly assessments</p>
+                        <ul class="text-start mt-3">
+                            <li>Multiple Choice Questions (MCQ)</li>
+                            <li>Auto-grading with instant results</li>
+                            <li>Optional timer for practice</li>
+                            <li>Final score with pass/fail indication</li>
+                        </ul>
+                        <button class="btn btn-success mt-3" id="startQuizBtn">Try Sample Quiz</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="exam-level-card level-2">
+                        <div class="exam-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Level 2: Student Dashboard</h3>
+                        <p>Premium exam system for registered students</p>
+                        <ul class="text-start mt-3">
+                            <li>Student login/registration system</li>
+                            <li>Assigned exams with time limits</li>
+                            <li>Progress tracking and history</li>
+                            <li>Chapter-wise tests and detailed reports</li>
+                            <li>Teacher feedback on weak areas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quiz Container (Initially Hidden) -->
+            <div class="quiz-container" id="quizContainer" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Japanese Language Quiz</h3>
+                    <div class="quiz-timer">
+                        Time: <span id="quizTimer">05:00</span>
+                    </div>
+                </div>
+                
+                <div id="quizContent">
+                    <div class="quiz-question" id="questionText">What is the Japanese word for "hello"?</div>
+                    
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="a">
+                            A) さようなら (Sayōnara)
+                        </div>
+                        <div class="quiz-option" data-answer="b">
+                            B) こんにちは (Konnichiwa)
+                        </div>
+                        <div class="quiz-option" data-answer="c">
+                            C) ありがとう (Arigatō)
+                        </div>
+                        <div class="quiz-option" data-answer="d">
+                            D) おはよう (Ohayō)
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <div id="questionCounter">Question 1 of 5</div>
+                        <button class="btn btn-primary" id="nextQuestionBtn">Next Question</button>
+                    </div>
+                </div>
+                
+                <div id="quizResults" style="display: none;">
+                    <h3 class="text-center">Quiz Results</h3>
+                    <div class="text-center my-4">
+                        <div class="display-4" id="finalScore">4/5</div>
+                        <div class="h5" id="resultStatus">Passed! Excellent work!</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Your Weak Areas:</h5>
+                        <ul>
+                            <li>Kanji recognition</li>
+                            <li>Verb conjugation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="p-3 bg-light rounded">
+                        <h5>Teacher Feedback:</h5>
+                        <p>Good overall performance! Focus more on Kanji practice and verb conjugations. Review lessons 3 and 5 for better understanding.</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-secondary me-2" id="retryQuizBtn">Retry Quiz</button>
+                        <button class="btn btn-primary" id="closeQuizBtn">Close Quiz</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exam Types -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h4 class="text-center mb-4">Available Exam Types</h4>
+                    <div class="row g-3 text-center">
+                        <div class="col-md-2 col-sm-4 col-6">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-language fa-2x mb-2" style="color: var(--japanese-red);"></i>
+                                <h6>Hiragana Test</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-4 col-6">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-language fa-2x mb-2" style="color: var(--japanese-red);"></i>
+                                <h6>Katakana Test</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-4 col-6">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-microphone fa-2x mb-2" style="color: var(--japanese-red);"></i>
+                                <h6>Spoken Test</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-4 col-6">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-pen-fancy fa-2x mb-2" style="color: var(--japanese-red);"></i>
+                                <h6>Grammar MCQ</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-4 col-6">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-headphones fa-2x mb-2" style="color: var(--japanese-red);"></i>
+                                <h6>Listening Test</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-4 col-6">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-book fa-2x mb-2" style="color: var(--japanese-red);"></i>
+                                <h6>Kanji Test</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Enrollment Section -->
+    <section class="enrollment-section section-padding" id="enroll">
+        <div class="container">
+            <h2 class="section-title">Start Your Japanese Journey Today</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="contact-form">
+                        <h4 class="mb-4">Free Trial Class Registration</h4>
+                        <form id="enrollmentForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="First Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Last Name" required>
+                                </div>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Email Address" required>
+                            <input type="tel" class="form-control" placeholder="Phone Number" required>
+                            <select class="form-select" required>
+                                <option value="" disabled selected>Select Course Interest</option>
+                                <option value="beginner">Beginner Japanese</option>
+                                <option value="intermediate">Intermediate Japanese</option>
+                                <option value="advanced">Conversational Mastery</option>
+                            </select>
+                            <textarea class="form-control" rows="4" placeholder="Any prior Japanese experience? (Optional)"></textarea>
+                            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold">Register for Free Trial Class</button>
+                        </form>
+                        
+                        <div class="payment-methods mt-4">
+                            <div class="payment-icon">
+                                <i class="fab fa-cc-mastercard"></i>
+                            </div>
+                            <div class="payment-icon">
+                                <i class="fab fa-cc-visa"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0">We accept bKash, Nagad, and all major credit cards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ps-lg-4">
+                        <h3 class="mb-4">What's Included in Your Enrollment</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fas fa-check-circle me-2" style="color: var(--soft-gold);"></i> Free trial class with personalized feedback</li>
+                            <li class="mb-3"><i class="fas fa-check-circle me-2" style="color: var(--soft-gold);"></i> Complete course materials (PDFs, audio, video)</li>
+                            <li class="mb-3"><i class="fas fa-check-circle me-2" style="color: var(--soft-gold);"></i> Access to class recordings for revision</li>
+                            <li class="mb-3"><i class="fas fa-check-circle me-2" style="color: var(--soft-gold);"></i> Weekly practice sessions and assignments</li>
+                            <li class="mb-3"><i class="fas fa-check-circle me-2" style="color: var(--soft-gold);"></i> Regular progress assessments and feedback</li>
+                            <li class="mb-3"><i class="fas fa-check-circle me-2" style="color: var(--soft-gold);"></i> Certificate of completion</li>
+                            <li class="mb-3"><i class="fas fa-check-circle me-2" style="color: var(--soft-gold);"></i> Post-course support and resources</li>
+                        </ul>
+                        
+                        <div class="mt-5">
+                            <h4>Have Questions?</h4>
+                            <p>Contact us directly via WhatsApp for instant response:</p>
+                            <a href="https://wa.me/8801XXXXXXXXX" class="btn btn-success" target="_blank">
+                                <i class="fab fa-whatsapp me-2"></i> Chat on WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-logo">Nihongo<span>Master</span></div>
+                    <p>Learn authentic Japanese language and culture from experienced instructors in the comfort of your home.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <a href="#home" class="footer-link">Home</a>
+                    <a href="#about" class="footer-link">About Sensei</a>
+                    <a href="#courses" class="footer-link">Courses</a>
+                    <a href="#class-system" class="footer-link">Class System</a>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Resources</h5>
+                    <a href="#exam" class="footer-link">Exams</a>
+                    <a href="#why-us" class="footer-link">Why Choose Us</a>
+                    <a href="#enroll" class="footer-link">Enrollment</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@nihongomaster.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +880 1XXX-XXXXXX</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Dhaka, Bangladesh</p>
+                    <p class="mt-3">© 2023 Nihongo Master. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap & jQuery Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/app.js"></script>
+
+</body>
+</html>
