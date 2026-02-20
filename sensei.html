@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/favicon-transparent.png" type="image/x-icon">
+    <title>Meet Your Sensei | Nihongo Master</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-navy: #1A2B3C;
+            --japanese-red: #E63946;
+            --soft-gold: #FFD166;
+            --pure-white: #FFFFFF;
+            --sakura-pink: #FFB7C5;
+            --light-gray: #F5F5F5;
+            --medium-gray: #E0E0E0;
+            --dark-gray: #333333;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            background-color: var(--pure-white);
+            overflow-x: hidden;
+            position: relative;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 600; }
+
+        /* scroll progress bar */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
+            background: linear-gradient(to right, var(--japanese-red), var(--soft-gold));
+            z-index: 10001; transition: width 0.1s ease;
+        }
+        /* custom cursor (light version) */
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--japanese-red); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: opacity 0.3s ease; }
+        .cursor-border { width: 40px; height: 40px; border: 2px solid var(--soft-gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: all 0.2s ease; }
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--light-gray); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--japanese-red), var(--deep-navy)); border-radius: 10px; }
+
+        /* navbar */
+        .navbar {
+            background-color: var(--deep-navy); padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.3s ease;
+        }
+        .navbar-brand { font-weight: 700; font-size: 28px; color: var(--pure-white) !important; }
+        .navbar-brand span { color: var(--japanese-red); }
+        .nav-link { color: var(--pure-white) !important; font-weight: 500; margin: 0 10px; transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--soft-gold) !important; }
+        .navbar-scrolled { padding: 10px 0; background-color: rgba(26,43,60,0.95); backdrop-filter: blur(5px); }
+
+        /* page header */
+        .page-header {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+            color: var(--pure-white); padding: 140px 0 60px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .page-header h1 { font-size: 3.2rem; font-weight: 700; margin-bottom: 15px; }
+        .page-header .sensei-sub { font-size: 1.2rem; opacity: 0.9; letter-spacing: 2px; }
+        .japanese-bg-element { position: absolute; opacity: 0.1; z-index: 1; font-size: 8rem; }
+        .sakura-left { top: 20%; left: 3%; color: var(--sakura-pink); }
+        .sakura-right { bottom: 10%; right: 5%; color: var(--sakura-pink); transform: rotate(15deg); }
+        .kanji-bg { top: 30%; right: 8%; font-size: 10rem; color: var(--soft-gold); font-family: 'MS Mincho', serif; content: "師"; }
+
+        /* sensei profile section */
+        .sensei-profile { padding: 80px 0; background-color: var(--pure-white); }
+        .sensei-main-img {
+            width: 100%; max-width: 450px; border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 5px solid var(--pure-white);
+            transition: transform 0.3s ease;
+        }
+        .sensei-main-img:hover { transform: scale(1.02); }
+        .sensei-name-lg { font-size: 2.8rem; color: var(--deep-navy); margin-bottom: 5px; }
+        .sensei-title-lg { color: var(--japanese-red); font-size: 1.5rem; font-weight: 500; margin-bottom: 20px; }
+        .signature { font-family: 'Brush Script MT', cursive; font-size: 2rem; color: var(--deep-navy); opacity: 0.7; margin-bottom: 20px; }
+
+        .info-card {
+            background: var(--light-gray); border-radius: 16px; padding: 30px; margin-top: 25px;
+            border-left: 6px solid var(--japanese-red);
+        }
+        .info-item { display: flex; align-items: center; margin-bottom: 20px; }
+        .info-icon {
+            width: 50px; height: 50px; background: var(--soft-gold); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin-right: 18px;
+            color: var(--deep-navy); font-size: 1.4rem;
+        }
+
+        /* journey / timeline */
+        .journey-section { background-color: var(--light-gray); padding: 70px 0; }
+        .timeline-item {
+            background: white; border-radius: 16px; padding: 25px; margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-bottom: 3px solid var(--soft-gold);
+        }
+        .timeline-year { font-weight: 700; font-size: 1.8rem; color: var(--japanese-red); }
+        .flag-icon { width: 35px; margin-right: 10px; }
+
+        /* teaching philosophy */
+        .philosophy-box {
+            background: var(--deep-navy); color: white; padding: 40px 30px;
+            border-radius: 24px; height: 100%; transition: all 0.3s;
+        }
+        .philosophy-box:hover { transform: translateY(-8px); }
+        .philosophy-icon { font-size: 2.8rem; color: var(--soft-gold); margin-bottom: 20px; }
+        .philosophy-box h4 { margin-bottom: 15px; }
+        .philosophy-box p { opacity: 0.9; }
+
+        /* credentials */
+        .credential-badge {
+            background: white; padding: 25px 15px; border-radius: 16px; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); height: 100%; border-top: 5px solid var(--japanese-red);
+        }
+        .badge-icon { font-size: 3rem; color: var(--deep-navy); margin-bottom: 15px; }
+        .badge-title { font-weight: 700; font-size: 1.3rem; margin-bottom: 10px; }
+
+        /* student love */
+        .testimonial-mini {
+            background: white; border-radius: 20px; padding: 25px; height: 100%;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-left: 5px solid var(--soft-gold);
+        }
+        .stars { color: var(--soft-gold); margin-bottom: 12px; }
+
+        /* cta banner */
+        .sensei-cta {
+            background: linear-gradient(105deg, var(--deep-navy) 0%, #2c3e50 100%);
+            color: white; border-radius: 30px; padding: 60px 40px; margin: 50px 0;
+        }
+
+        /* footer */
+        footer {
+            background-color: var(--deep-navy); color: var(--pure-white);
+            padding: 50px 0 30px; margin-top: 60px;
+        }
+        .footer-logo { font-size: 2rem; font-weight: 700; color: var(--pure-white); }
+        .footer-logo span { color: var(--japanese-red); }
+        .footer-link { color: rgba(255,255,255,0.7); text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s; }
+        .footer-link:hover { color: var(--soft-gold); }
+        .social-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%;
+            color: white; margin-right: 8px; transition: 0.3s;
+        }
+        .social-icon:hover { background: var(--japanese-red); transform: translateY(-4px); }
+
+        /* back to home */
+        .back-home { position: fixed; bottom: 30px; right: 30px; z-index: 99; }
+        .btn-circle {
+            width: 55px; height: 55px; border-radius: 50%; background: var(--japanese-red);
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; box-shadow: 0 6px 15px rgba(230,57,70,0.3); transition: 0.3s;
+        }
+        .btn-circle:hover { background: var(--deep-navy); transform: translateY(-5px); color: white; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2.5rem; }
+            .sensei-name-lg { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- scroll progress & cursor (simple) -->
+    <div class="scroll-progress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-border"></div>
+
+    <!-- navbar (identical to home) -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Nihongo<span>Master</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="sensei.html">About Sensei</a></li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="class-system.html">Class System</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#why-us">Why Choose Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="exams.html">Exams</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#enroll">Enroll</a></li>
+                    <!-- simple login dummy (no modal for brevity, just show icon) -->
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user-circle"></i> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page header with japanese elements -->
+    <div class="page-header">
+        <div class="japanese-bg-element sakura-left">🌸</div>
+        <div class="japanese-bg-element sakura-right">🌸</div>
+        <div class="japanese-bg-element kanji-bg">師</div>
+        <div class="container position-relative" style="z-index:3;">
+            <h1>貴方の先生 — Your Sensei</h1>
+            <div class="sensei-sub">Ahmed Hossain • 日本語講師</div>
+        </div>
+    </div>
+
+    <!-- main profile section -->
+    <section class="sensei-profile">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 text-center">
+                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Sensei Ahmed Hossain" class="sensei-main-img">
+                </div>
+                <div class="col-lg-7">
+                    <h2 class="sensei-name-lg">Ahmed Hossain</h2>
+                    <div class="sensei-title-lg">Japanese Language Instructor & Cultural Ambassador</div>
+                    <div class="signature">"言葉は心を繋ぐ"</div>
+                    <p class="lead">With over a decade of immersion in Japan and teaching, I don't just teach Japanese — I open doors to a new cultural identity. My students describe my classes as <strong>patient, energetic, and deeply practical.</strong></p>
+                    
+                    <div class="info-card">
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fas fa-certificate"></i></div>
+                            <div><strong>JLPT N1 (最高レベル)</strong> — Native-equivalent certification</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fas fa-university"></i></div>
+                            <div><strong>Waseda University, Tokyo</strong> — Japanese Linguistics (Master's)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fas fa-globe-asia"></i></div>
+                            <div><strong>10+ years in Japan</strong> — Lived in Tokyo, Osaka, Fukuoka</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fas fa-users"></i></div>
+                            <div><strong>1,200+ students</strong> — From complete beginners to business executives</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey & timeline -->
+    <section class="journey-section">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: var(--deep-navy);">My Journey to 日本</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="timeline-item">
+                        <span class="timeline-year">2009</span>
+                        <div class="d-flex align-items-center mt-2"><i class="fas fa-plane-departure flag-icon"></i> <strong>First arrived in Tokyo</strong></div>
+                        <p>Started as an exchange student, fell in love with the language and culture. Spent first year in intensive language school.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2012</span>
+                        <div class="d-flex align-items-center mt-2"><i class="fas fa-graduation-cap flag-icon"></i> <strong>Waseda University</strong></div>
+                        <p>Completed Master's in Japanese Linguistics. Thesis on second-language acquisition.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2014</span>
+                        <div class="d-flex align-items-center mt-2"><i class="fas fa-briefcase flag-icon"></i> <strong>Corporate interpreter</strong></div>
+                        <p>Worked as interpreter/translator for major trading firms between Bangladesh & Japan.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="timeline-item">
+                        <span class="timeline-year">2017</span>
+                        <div class="d-flex align-items-center mt-2"><i class="fas fa-chalkboard-teacher flag-icon"></i> <strong>Return to teaching</strong></div>
+                        <p>Started formal teaching at Japanese language institutes in Dhaka. Developed original curriculum.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2020</span>
+                        <div class="d-flex align-items-center mt-2"><i class="fas fa-video flag-icon"></i> <strong>Nihongo Master online</strong></div>
+                        <p>Launched online platform to reach students worldwide. Created immersive live classes.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">今</span>
+                        <div class="d-flex align-items-center mt-2"><i class="fas fa-heart flag-icon" style="color:var(--japanese-red);"></i> <strong>Still learning every day</strong></div>
+                        <p>Continuing to refine teaching methods, bringing authentic Japanese to you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- teaching philosophy + credentials -->
+    <section style="padding: 70px 0;">
+        <div class="container">
+            <h2 class="text-center mb-5">Teaching Philosophy & Credentials</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="philosophy-box">
+                        <div class="philosophy-icon"><i class="fas fa-comment-dots"></i></div>
+                        <h4>Spoken First</h4>
+                        <p>I believe you learn a language by speaking it — from day one. My classes are interactive, not just lectures.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="philosophy-box">
+                        <div class="philosophy-icon"><i class="fas fa-seedling"></i></div>
+                        <h4>Cultural Roots</h4>
+                        <p>Language without culture is empty. We explore 和 (harmony), おもてなし (hospitality), and daily life in Japan.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="philosophy-box">
+                        <div class="philosophy-icon"><i class="fas fa-chart-line"></i></div>
+                        <h4>Progress Tracking</h4>
+                        <p>Every student gets personalized feedback, weekly goals, and measurable milestones.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5 g-4">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="credential-badge">
+                        <div class="badge-icon"><i class="fas fa-language"></i></div>
+                        <div class="badge-title">JLPT N1</div>
+                        <p class="small">Scored 165/180 · Top 2%</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="credential-badge">
+                        <div class="badge-icon"><i class="fas fa-pen-fancy"></i></div>
+                        <div class="badge-title">BJT J1+</div>
+                        <p class="small">Business Japanese Proficiency</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="credential-badge">
+                        <div class="badge-icon"><i class="fas fa-chalkboard"></i></div>
+                        <div class="badge-title">4200+ classes</div>
+                        <p class="small">Live online & in-person</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="credential-badge">
+                        <div class="badge-icon"><i class="fas fa-heart"></i></div>
+                        <div class="badge-title">5.0 rating</div>
+                        <p class="small">from 500+ student reviews</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- mini student testimonials (specific to sensei) -->
+    <section style="background-color: var(--light-gray); padding: 60px 0;">
+        <div class="container">
+            <h2 class="text-center mb-4">What Students Say About Sensei</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-mini">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p><i class="fas fa-quote-left me-1" style="color:var(--soft-gold);"></i> Sensei Ahmed explains grammar so clearly. He always connects it to real conversations, not just textbook rules. I passed N4 in 4 months!</p>
+                        <div class="mt-3"><strong>— Fatima Z., Student</strong></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-mini">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p><i class="fas fa-quote-left me-1" style="color:var(--soft-gold);"></i> His insights about Japanese culture make the lessons fascinating. It's more than language — it's like living in Japan virtually.</p>
+                        <div class="mt-3"><strong>— Ravi K., Professional</strong></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-mini">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p><i class="fas fa-quote-left me-1" style="color:var(--soft-gold);"></i> I was afraid to speak, but Sensei's patience and encouragement built my confidence. Now I can converse with my Japanese colleagues.</p>
+                        <div class="mt-3"><strong>— Mika T., Student</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- cta section -->
+    <div class="container">
+        <div class="sensei-cta text-center">
+            <h3 class="mb-4">Learn directly from Sensei Ahmed</h3>
+            <p class="lead mb-4">Join a free trial class and experience his teaching style yourself.</p>
+            <a href="index.html#enroll" class="btn btn-lg" style="background: var(--japanese-red); color:white; padding: 12px 40px; border-radius: 50px; font-weight: 600;">🔴 無料トライアル</a>
+            <a href="courses.html" class="btn btn-lg ms-3" style="border:2px solid var(--soft-gold); color:var(--soft-gold); padding: 12px 40px; border-radius: 50px;">View Courses</a>
+        </div>
+    </div>
+
+    <!-- back to top button -->
+    <div class="back-home">
+        <a href="#" id="back-to-top" class="btn-circle"><i class="fas fa-chevron-up"></i></a>
+    </div>
+
+    <!-- footer (similar to home) -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-logo">Nihongo<span>Master</span></div>
+                    <p>Learn authentic Japanese language and culture from experienced instructors in the comfort of your home.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <a href="index.html#home" class="footer-link">Home</a>
+                    <a href="sensei.html" class="footer-link">About Sensei</a>
+                    <a href="courses.html" class="footer-link">Courses</a>
+                    <a href="class-system.html" class="footer-link">Class System</a>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Resources</h5>
+                    <a href="exams.html" class="footer-link">Exams</a>
+                    <a href="index.html#why-us" class="footer-link">Why Choose Us</a>
+                    <a href="index.html#enroll" class="footer-link">Enrollment</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@nihongomaster.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +880 1XXX-XXXXXX</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Dhaka, Bangladesh</p>
+                    <p class="mt-3">© 2023 Nihongo Master. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function() {
+            // progress bar
+            const progressBar = document.querySelector('.scroll-progress');
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const progress = (scrollTop / scrollHeight) * 100;
+                progressBar.style.width = progress + '%';
+            });
+
+            // cursor (simplified)
+            const dot = document.querySelector('.cursor-dot');
+            const border = document.querySelector('.cursor-border');
+            document.addEventListener('mousemove', (e) => {
+                dot.style.left = e.clientX + 'px';
+                dot.style.top = e.clientY + 'px';
+                border.style.left = e.clientX + 'px';
+                border.style.top = e.clientY + 'px';
+            });
+
+            // hover effect on interactive
+            const interactive = document.querySelectorAll('a, button, .philosophy-box, .credential-badge, .timeline-item, .testimonial-mini');
+            interactive.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    border.style.width = '55px';
+                    border.style.height = '55px';
+                    border.style.borderColor = '#E63946';
+                });
+                el.addEventListener('mouseleave', () => {
+                    border.style.width = '40px';
+                    border.style.height = '40px';
+                    border.style.borderColor = '#FFD166';
+                });
+            });
+
+            // back to top
+            document.getElementById('back-to-top').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) navbar.classList.add('navbar-scrolled');
+                else navbar.classList.remove('navbar-scrolled');
+            });
+
+            // smooth scroll for footer/home links (just for demo)
+            $('a[href^="#"]').not('[href="#"]').click(function(e) {
+                e.preventDefault();
+                const target = $(this).attr('href');
+                if (target && target!=='#' && $(target).length) {
+                    $('html, body').animate({ scrollTop: $(target).offset().top - 80 }, 600);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

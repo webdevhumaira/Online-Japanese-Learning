@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/favicon-transparent.png" type="image/x-icon">
+    <title>Our Courses - Nihongo Master</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --deep-navy: #1A2B3C;
+            --japanese-red: #E63946;
+            --soft-gold: #FFD166;
+            --pure-white: #FFFFFF;
+            --sakura-pink: #FFB7C5;
+            --light-gray: #F5F5F5;
+            --medium-gray: #E0E0E0;
+            --dark-gray: #333333;
+            --success-green: #28a745;
+            --info-blue: #17a2b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            background-color: var(--pure-white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .cursor-border {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--soft-gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease, width 0.2s ease, height 0.2s ease;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, var(--japanese-red), var(--soft-gold));
+            z-index: 10001;
+            transition: width 0.1s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--japanese-red), var(--deep-navy));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--deep-navy), var(--japanese-red));
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--japanese-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--deep-navy);
+            transform: translateY(-5px);
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: var(--pure-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            z-index: 999;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--deep-navy);
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--pure-white) !important;
+        }
+
+        .navbar-brand span {
+            color: var(--japanese-red);
+        }
+
+        .nav-link {
+            color: var(--pure-white) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--soft-gold) !important;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(26, 43, 60, 0.9), rgba(26, 43, 60, 0.95)),
+                url('https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--pure-white);
+            padding: 150px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.1s both;
+        }
+
+        .breadcrumb-item a {
+            color: var(--soft-gold);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: var(--pure-white);
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            color: var(--pure-white);
+        }
+
+        /* Course Filter */
+        .course-filter {
+            background-color: var(--light-gray);
+            padding: 30px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            background-color: var(--pure-white);
+            color: var(--deep-navy);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--japanese-red);
+            color: var(--pure-white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        /* Course Cards - Enhanced for Courses Page */
+        .course-card {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid var(--medium-gray);
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--japanese-red);
+            color: var(--pure-white);
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+        }
+
+        .course-badge.popular {
+            background-color: var(--soft-gold);
+            color: var(--deep-navy);
+        }
+
+        .course-badge.new {
+            background-color: var(--success-green);
+        }
+
+        .course-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .course-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .course-card:hover .course-img img {
+            transform: scale(1.1);
+        }
+
+        .course-img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(26, 43, 60, 0.7) 100%);
+        }
+
+        .course-level-icon {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 12px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--deep-navy);
+        }
+
+        .course-level-icon i {
+            color: var(--japanese-red);
+            margin-right: 5px;
+        }
+
+        .course-content {
+            padding: 25px 20px;
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            margin-bottom: 0;
+            color: var(--deep-navy);
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--japanese-red);
+        }
+
+        .course-price small {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            font-weight: 400;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .course-meta i {
+            color: var(--japanese-red);
+            margin-right: 5px;
+        }
+
+        .course-description {
+            color: #6c757d;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .course-features {
+            margin-bottom: 20px;
+        }
+
+        .course-features .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .course-features .feature-item i {
+            color: var(--success-green);
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--medium-gray);
+        }
+
+        .course-btn {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid var(--deep-navy);
+        }
+
+        .course-btn:hover {
+            background-color: var(--japanese-red);
+            border-color: var(--japanese-red);
+            color: var(--pure-white);
+        }
+
+        .course-btn-outline {
+            background-color: transparent;
+            color: var(--deep-navy);
+            border: 2px solid var(--deep-navy);
+        }
+
+        .course-btn-outline:hover {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+        }
+
+        /* Curriculum Preview */
+        .curriculum-preview {
+            background-color: var(--light-gray);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .curriculum-preview h5 {
+            color: var(--deep-navy);
+            margin-bottom: 15px;
+        }
+
+        .curriculum-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .curriculum-item:last-child {
+            border-bottom: none;
+        }
+
+        .curriculum-item i {
+            color: var(--japanese-red);
+            margin-right: 15px;
+            width: 20px;
+        }
+
+        .curriculum-item .week {
+            background-color: var(--soft-gold);
+            color: var(--deep-navy);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            background-color: var(--pure-white);
+            padding: 80px 0;
+        }
+
+        .comparison-table {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table table {
+            margin-bottom: 0;
+        }
+
+        .comparison-table th {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 20px;
+            font-weight: 600;
+            border: none;
+        }
+
+        .comparison-table td {
+            padding: 15px 20px;
+            border-color: var(--medium-gray);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .feature-yes {
+            color: var(--success-green);
+            font-size: 1.2rem;
+        }
+
+        .comparison-table .feature-no {
+            color: var(--japanese-red);
+            font-size: 1.2rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+        }
+
+        .accordion-item {
+            border: none;
+            margin-bottom: 15px;
+            border-radius: 10px !important;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            padding: 20px 25px;
+            font-weight: 600;
+            color: var(--deep-navy);
+            background-color: var(--pure-white);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--japanese-red);
+            color: var(--pure-white);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        .accordion-body {
+            padding: 25px;
+            background-color: var(--pure-white);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--japanese-red) 0%, #b71c1c 100%);
+            color: var(--pure-white);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cta-banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-banner .btn {
+            background-color: var(--pure-white);
+            color: var(--japanese-red);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-banner .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--pure-white);
+        }
+
+        .footer-logo span {
+            color: var(--japanese-red);
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--soft-gold);
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--pure-white);
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--japanese-red);
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            .filter-buttons {
+                gap: 10px;
+            }
+            .filter-btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+            .cta-banner h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 120px 0 60px;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            .course-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-border"></div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/8801XXXXXXXXX" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Nihongo<span>Master</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About Sensei</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#class-system">Class System</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#exam">Exams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#enroll">Enroll</a>
+                    </li>
+                    <!-- Login Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i> Login
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <h6 class="dropdown-header">Login as</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="student"><i class="fas fa-graduation-cap me-2"></i>Student</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="teacher"><i class="fas fa-chalkboard-teacher me-2"></i>Teacher</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="admin"><i class="fas fa-user-shield me-2"></i>Admin</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#signupModal"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Courses</li>
+                </ol>
+            </nav>
+            <h1>Our Japanese Courses</h1>
+            <p>Choose from our comprehensive range of Japanese language courses designed for every level</p>
+        </div>
+    </section>
+
+    <!-- Course Filter -->
+    <section class="course-filter">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Courses</button>
+                <button class="filter-btn" data-filter="beginner">Beginner</button>
+                <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                <button class="filter-btn" data-filter="advanced">Advanced</button>
+                <button class="filter-btn" data-filter="jlpt">JLPT Prep</button>
+                <button class="filter-btn" data-filter="business">Business</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Grid -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row g-4" id="coursesGrid">
+                <!-- Course 1 - Beginner Japanese -->
+                <div class="col-lg-4 col-md-6 course-item beginner" data-aos="fade-up">
+                    <div class="course-card">
+                        <span class="course-badge popular">Most Popular</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1529257414772-1960b7bea4eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Beginner Japanese">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-seedling"></i> Beginner
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">Beginner Japanese</h3>
+                                <div class="course-price">৳5,999 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 6 Weeks</span>
+                                <span><i class="fas fa-video"></i> 24 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 15</span>
+                            </div>
+                            <p class="course-description">
+                                Perfect for absolute beginners. Learn hiragana, katakana, basic grammar, and essential conversations.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Hiragana & Katakana mastery</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>100+ essential vocabulary</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Basic sentence structures</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Introduction to Kanji (20 characters)</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="beginner">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2 - Intermediate Japanese -->
+                <div class="col-lg-4 col-md-6 course-item intermediate" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-card">
+                        <span class="course-badge new">New</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Intermediate Japanese">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-tree"></i> Intermediate
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">Intermediate Japanese</h3>
+                                <div class="course-price">৳6,999 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 8 Weeks</span>
+                                <span><i class="fas fa-video"></i> 32 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 12</span>
+                            </div>
+                            <p class="course-description">
+                                Build on your foundation. Learn complex grammar, more kanji, and improve conversational fluency.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>150+ essential Kanji characters</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Complex grammar patterns</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Conversational practice</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Reading comprehension</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="intermediate">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3 - Advanced Conversational -->
+                <div class="col-lg-4 col-md-6 course-item advanced" data-aos="fade-up" data-aos-delay="200">
+                    <div class="course-card">
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1522204523234-8729aaeb3c5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Advanced Conversational">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-mountain"></i> Advanced
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">Conversational Mastery</h3>
+                                <div class="course-price">৳8,499 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 10 Weeks</span>
+                                <span><i class="fas fa-video"></i> 40 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 10</span>
+                            </div>
+                            <p class="course-description">
+                                Achieve fluency with intensive conversation practice, business Japanese, and cultural nuances.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Natural conversation skills</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Business Japanese etiquette</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Debate & discussion practice</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Cultural immersion activities</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="advanced">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 4 - JLPT N5 Preparation -->
+                <div class="col-lg-4 col-md-6 course-item jlpt beginner" data-aos="fade-up">
+                    <div class="course-card">
+                        <span class="course-badge">JLPT Focus</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="JLPT N5 Preparation">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-certificate"></i> JLPT N5
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">JLPT N5 Prep</h3>
+                                <div class="course-price">৳6,499 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 8 Weeks</span>
+                                <span><i class="fas fa-video"></i> 32 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 15</span>
+                            </div>
+                            <p class="course-description">
+                                Intensive preparation for the JLPT N5 exam with practice tests and strategies.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Complete N5 vocabulary & grammar</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>100+ Kanji characters</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Listening comprehension practice</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>5 full-length mock tests</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="jlpt-n5">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 5 - JLPT N4 Preparation -->
+                <div class="col-lg-4 col-md-6 course-item jlpt intermediate" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-card">
+                        <span class="course-badge">JLPT Focus</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="JLPT N4 Preparation">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-certificate"></i> JLPT N4
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">JLPT N4 Prep</h3>
+                                <div class="course-price">৳7,499 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 10 Weeks</span>
+                                <span><i class="fas fa-video"></i> 40 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 12</span>
+                            </div>
+                            <p class="course-description">
+                                Comprehensive preparation for JLPT N4 with advanced grammar and reading practice.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Complete N4 vocabulary & grammar</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>200+ Kanji characters</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Advanced listening practice</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>6 full-length mock tests</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="jlpt-n4">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 6 - Business Japanese -->
+                <div class="col-lg-4 col-md-6 course-item business advanced" data-aos="fade-up" data-aos-delay="200">
+                    <div class="course-card">
+                        <span class="course-badge popular">Professional</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Business Japanese">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-briefcase"></i> Business
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">Business Japanese</h3>
+                                <div class="course-price">৳9,999 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 12 Weeks</span>
+                                <span><i class="fas fa-video"></i> 48 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 8</span>
+                            </div>
+                            <p class="course-description">
+                                Professional Japanese for business contexts, including keigo, email writing, and presentations.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Keigo (honorific language) mastery</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Business email & document writing</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Presentation skills</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Meeting etiquette & negotiation</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="business">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 7 - Kids Japanese -->
+                <div class="col-lg-4 col-md-6 course-item beginner" data-aos="fade-up">
+                    <div class="course-card">
+                        <span class="course-badge new">For Kids</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1503919545889-a0f9acfdf4bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Kids Japanese">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-child"></i> Kids (6-12)
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">Japanese for Kids</h3>
+                                <div class="course-price">৳4,999 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 8 Weeks</span>
+                                <span><i class="fas fa-video"></i> 16 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 8</span>
+                            </div>
+                            <p class="course-description">
+                                Fun and engaging Japanese lessons for children aged 6-12 with games and activities.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Hiragana through songs & games</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Basic greetings & phrases</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Japanese culture & stories</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Interactive learning materials</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="kids">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 8 - Private Tutoring -->
+                <div class="col-lg-4 col-md-6 course-item all" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-card">
+                        <span class="course-badge">1-on-1</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Private Tutoring">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-chalkboard-teacher"></i> Private
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">Private Tutoring</h3>
+                                <div class="course-price">৳12,999 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> Flexible</span>
+                                <span><i class="fas fa-video"></i> Custom</span>
+                                <span><i class="fas fa-user"></i> 1-on-1</span>
+                            </div>
+                            <p class="course-description">
+                                Personalized 1-on-1 lessons tailored to your goals, pace, and schedule.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Customized curriculum</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Flexible scheduling</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Personalized feedback</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Focus on weak areas</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="private">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 9 - Kanji Mastery -->
+                <div class="col-lg-4 col-md-6 course-item advanced" data-aos="fade-up" data-aos-delay="200">
+                    <div class="course-card">
+                        <span class="course-badge">Specialization</span>
+                        <div class="course-img">
+                            <img src="https://images.unsplash.com/photo-1587614295999-6e4545aa5f8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Kanji Mastery">
+                            <div class="course-img-overlay"></div>
+                            <div class="course-level-icon">
+                                <i class="fas fa-pen-fancy"></i> Kanji Focus
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-header">
+                                <h3 class="course-title">Kanji Mastery</h3>
+                                <div class="course-price">৳7,999 <small>/mo</small></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> 8 Weeks</span>
+                                <span><i class="fas fa-video"></i> 24 Classes</span>
+                                <span><i class="fas fa-users"></i> Max 12</span>
+                            </div>
+                            <p class="course-description">
+                                Intensive kanji learning program covering 300+ essential characters with mnemonics.
+                            </p>
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>300+ Kanji with mnemonics</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Stroke order practice</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Compound word building</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Reading practice with texts</span>
+                                </div>
+                            </div>
+                            <div class="course-footer">
+                                <a href="#" class="course-btn">Enroll Now</a>
+                                <a href="#" class="course-btn course-btn-outline" data-bs-toggle="modal" data-bs-target="#courseDetailModal" data-course="kanji">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Comparison Table -->
+    <section class="comparison-section">
+        <div class="container">
+            <h2 class="section-title">Compare Our Courses</h2>
+            <p class="text-center mb-5">Find the perfect course for your learning goals</p>
+            
+            <div class="comparison-table table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Features</th>
+                            <th>Beginner</th>
+                            <th>Intermediate</th>
+                            <th>Advanced</th>
+                            <th>JLPT Prep</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Duration</strong></td>
+                            <td>6 Weeks</td>
+                            <td>8 Weeks</td>
+                            <td>10 Weeks</td>
+                            <td>8-10 Weeks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Classes per week</strong></td>
+                            <td>4 classes</td>
+                            <td>4 classes</td>
+                            <td>4 classes</td>
+                            <td>4 classes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Class duration</strong></td>
+                            <td>1.5 hours</td>
+                            <td>1.5 hours</td>
+                            <td>2 hours</td>
+                            <td>2 hours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Max students</strong></td>
+                            <td>15</td>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kanji covered</strong></td>
+                            <td>20</td>
+                            <td>150</td>
+                            <td>300+</td>
+                            <td>100-200</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Speaking practice</strong></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i> Basic</td>
+                            <td><i class="fas fa-check-circle feature-yes"></i> Intermediate</td>
+                            <td><i class="fas fa-check-circle feature-yes"></i> Advanced</td>
+                            <td><i class="fas fa-check-circle feature-yes"></i> Moderate</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Writing practice</strong></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mock tests</strong></td>
+                            <td><i class="fas fa-times-circle feature-no"></i></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i> 2</td>
+                            <td><i class="fas fa-check-circle feature-yes"></i> 4</td>
+                            <td><i class="fas fa-check-circle feature-yes"></i> 5-6</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Certificate</strong></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                            <td><i class="fas fa-check-circle feature-yes"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Which course should I start with?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    If you have no prior Japanese knowledge, start with our Beginner Japanese course. If you already know hiragana/katakana and some basic phrases, take our placement test to determine the best level for you. You can also schedule a free consultation with our sensei to discuss your goals.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Can I switch courses if the level is too easy/hard?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! We offer a 1-week trial period for all courses. If you find the level doesn't match your needs, you can switch to a different course within the first week at no additional cost. Our sensei will guide you to the most suitable level.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Are the classes live or recorded?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    All our classes are live, interactive sessions conducted via Zoom. However, every class is recorded and made available to students within 24 hours for review. This ensures you never miss a lesson and can revise anytime.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    What is your refund policy?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We offer a 7-day money-back guarantee for all our courses. If you're not satisfied within the first week, we'll provide a full refund. No questions asked. After 7 days, refunds are prorated based on the remaining classes.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Do you offer certificates?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! Upon successful completion of any course (attendance ≥80% and passing final assessment), you'll receive a certificate of completion. Our certificates are recognized by many employers and educational institutions in Bangladesh.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    Can I pay in installments?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Absolutely! We offer flexible payment options. You can pay in 2-3 installments for longer courses. We accept bKash, Nagad, bank transfer, and all major credit/debit cards. Contact our support team for custom payment plans.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2>Not Sure Which Course to Choose?</h2>
+            <p>Schedule a free consultation with our sensei for personalized guidance</p>
+            <a href="index.html#enroll" class="btn btn-light">Book Free Consultation</a>
+        </div>
+    </section>
+
+    <!-- Course Detail Modal -->
+    <div class="modal fade" id="courseDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="courseDetailModalLabel">Course Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="courseDetailBody">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="index.html#enroll" class="btn btn-primary">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-logo">Nihongo<span>Master</span></div>
+                    <p>Learn authentic Japanese language and culture from experienced instructors in the comfort of your home.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <a href="index.html" class="footer-link">Home</a>
+                    <a href="index.html#about" class="footer-link">About Sensei</a>
+                    <a href="courses.html" class="footer-link">Courses</a>
+                    <a href="index.html#class-system" class="footer-link">Class System</a>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Resources</h5>
+                    <a href="index.html#exam" class="footer-link">Exams</a>
+                    <a href="index.html#why-us" class="footer-link">Why Choose Us</a>
+                    <a href="index.html#enroll" class="footer-link">Enrollment</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@nihongomaster.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +880 1XXX-XXXXXX</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Dhaka, Bangladesh</p>
+                    <p class="mt-3">© 2023 Nihongo Master. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal (Same as index.html) -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login as <span id="selectedRole">Student</span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-decoration-none">Forgot Password?</a>
+                        </div>
+                    </form>
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6 class="mb-2">Demo Credentials:</h6>
+                        <div class="small">
+                            <p class="mb-1"><strong>Student:</strong> student@example.com / student123</p>
+                            <p class="mb-1"><strong>Teacher:</strong> teacher@example.com / teacher123</p>
+                            <p class="mb-0"><strong>Admin:</strong> admin@example.com / admin123</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="mb-0">Don't have an account? <a href="#" data-bs-toggle="modal"
+                            data-bs-target="#signupModal" data-bs-dismiss="modal">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal (Same as index.html) -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Create New Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="signupPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupRole" class="form-label">I want to join as</label>
+                            <select class="form-select" id="signupRole" required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="signupPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="signupPassword" required>
+                                <small class="text-muted">Minimum 8 characters</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                            </div>
+                        </div>
+                        <div id="studentFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Student Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="studentLevel" class="form-label">Current Japanese Level</label>
+                                    <select class="form-select" id="studentLevel">
+                                        <option value="beginner">Beginner (No experience)</option>
+                                        <option value="beginner2">Beginner (Some Hiragana/Katakana)</option>
+                                        <option value="intermediate">Intermediate (Basic conversation)</option>
+                                        <option value="advanced">Advanced (JLPT N3 or above)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="studentCourse" class="form-label">Interested Course</label>
+                                    <select class="form-select" id="studentCourse">
+                                        <option value="beginner">Beginner Japanese</option>
+                                        <option value="intermediate">Intermediate Japanese</option>
+                                        <option value="advanced">Conversational Mastery</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="teacherFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Teacher Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="teacherQualification" class="form-label">Qualification</label>
+                                    <input type="text" class="form-control" id="teacherQualification"
+                                        placeholder="e.g., JLPT N1, Teaching Experience">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="teacherSpecialization" class="form-label">Specialization</label>
+                                    <select class="form-select" id="teacherSpecialization">
+                                        <option value="beginner">Beginner Level</option>
+                                        <option value="intermediate">Intermediate Level</option>
+                                        <option value="advanced">Advanced Level</option>
+                                        <option value="jlpt">JLPT Preparation</option>
+                                        <option value="conversation">Conversation Practice</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teacherBio" class="form-label">Short Bio</label>
+                                <textarea class="form-control" id="teacherBio" rows="2"
+                                    placeholder="Tell us about your teaching experience..."></textarea>
+                            </div>
+                        </div>
+                        <div id="adminFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Admin Information</h6>
+                            <div class="mb-3">
+                                <label for="adminDepartment" class="form-label">Department</label>
+                                <input type="text" class="form-control" id="adminDepartment" value="Administration"
+                                    readonly>
+                                <small class="text-muted">Admin accounts require approval from super admin</small>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
+                            <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms of
+                                    Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p class="mb-0">Already have an account? <a href="#" data-bs-toggle="modal"
+                            data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+
+            // Custom Cursor
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-border');
+
+            document.addEventListener('mousemove', function (e) {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            });
+
+            // Add hover effect to interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .course-card, .filter-btn, .social-icon');
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursorOutline.style.width = '60px';
+                    cursorOutline.style.height = '60px';
+                    cursorOutline.style.borderColor = '#FFD166';
+                });
+
+                element.addEventListener('mouseleave', () => {
+                    cursorOutline.style.width = '40px';
+                    cursorOutline.style.height = '40px';
+                    cursorOutline.style.borderColor = '#FFD166';
+                });
+            });
+
+            // Scroll Progress Bar
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                document.querySelector('.scroll-progress').style.width = scrollPercentage + '%';
+            });
+
+            // Scroll to Top Button
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('active');
+                } else {
+                    scrollToTopBtn.classList.remove('active');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Course Filtering
+            $('.filter-btn').click(function () {
+                const filterValue = $(this).data('filter');
+                
+                // Update active button
+                $('.filter-btn').removeClass('active');
+                $(this).addClass('active');
+
+                // Filter courses
+                if (filterValue === 'all') {
+                    $('.course-item').fadeIn(400);
+                } else {
+                    $('.course-item').fadeOut(200);
+                    $(`.course-item.${filterValue}`).fadeIn(400);
+                }
+            });
+
+            // Course Detail Modal
+            $('[data-bs-target="#courseDetailModal"]').click(function (e) {
+                e.preventDefault();
+                const course = $(this).data('course');
+                loadCourseDetails(course);
+            });
+
+            function loadCourseDetails(course) {
+                let content = '';
+                
+                if (course === 'beginner') {
+                    content = `
+                        <h4>Beginner Japanese Course</h4>
+                        <p class="text-muted">Perfect for absolute beginners with no prior Japanese experience.</p>
+                        
+                        <h5 class="mt-4">Course Overview</h5>
+                        <p>This 6-week course is designed to take you from zero to basic conversational Japanese. You'll learn to read and write Hiragana and Katakana, understand basic grammar structures, and communicate in everyday situations.</p>
+                        
+                        <h5 class="mt-4">Curriculum</h5>
+                        <ul>
+                            <li>Week 1-2: Hiragana mastery and basic greetings</li>
+                            <li>Week 3-4: Katakana and simple sentence structures</li>
+                            <li>Week 5-6: Basic conversations and 20 essential Kanji</li>
+                        </ul>
+                        
+                        <h5 class="mt-4">What's Included</h5>
+                        <ul>
+                            <li>24 live classes (1.5 hours each)</li>
+                            <li>PDF textbooks and worksheets</li>
+                            <li>Class recordings for review</li>
+                            <li>Weekly speaking practice</li>
+                            <li>Certificate upon completion</li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Schedule Options</h5>
+                        <p>Morning Batch: Sun-Tue-Thu, 10:00 AM - 11:30 AM<br>
+                        Evening Batch: Mon-Wed-Fri, 7:30 PM - 9:00 PM</p>
+                        
+                        <h5 class="mt-4">Price: ৳5,999/month</h5>
+                    `;
+                } else if (course === 'intermediate') {
+                    content = `
+                        <h4>Intermediate Japanese Course</h4>
+                        <p class="text-muted">For students who have completed beginner level or equivalent.</p>
+                        
+                        <h5 class="mt-4">Course Overview</h5>
+                        <p>This 8-week course builds on your foundation. You'll learn 150+ Kanji, complex grammar patterns, and develop conversational fluency through regular practice sessions.</p>
+                        
+                        <h5 class="mt-4">Curriculum</h5>
+                        <ul>
+                            <li>Week 1-2: Review and 50 new Kanji</li>
+                            <li>Week 3-4: Complex grammar and verb forms</li>
+                            <li>Week 5-6: Conversation practice and listening</li>
+                            <li>Week 7-8: Reading comprehension and review</li>
+                        </ul>
+                        
+                        <h5 class="mt-4">What's Included</h5>
+                        <ul>
+                            <li>32 live classes (1.5 hours each)</li>
+                            <li>Comprehensive study materials</li>
+                            <li>2 mock tests with feedback</li>
+                            <li>Conversation club access</li>
+                            <li>Certificate upon completion</li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Price: ৳6,999/month</h5>
+                    `;
+                } else if (course === 'advanced') {
+                    content = `
+                        <h4>Conversational Mastery Course</h4>
+                        <p class="text-muted">Advanced level course focusing on fluency and natural conversation.</p>
+                        
+                        <h5 class="mt-4">Course Overview</h5>
+                        <p>This 10-week intensive course is for students who want to achieve near-native fluency. You'll engage in debates, discussions, and learn business Japanese etiquette.</p>
+                        
+                        <h5 class="mt-4">What You'll Learn</h5>
+                        <ul>
+                            <li>Natural conversation with native-like flow</li>
+                            <li>Business Japanese and keigo</li>
+                            <li>Discussion and debate skills</li>
+                            <li>Cultural nuances and expressions</li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Price: ৳8,499/month</h5>
+                    `;
+                } else if (course === 'jlpt-n5') {
+                    content = `
+                        <h4>JLPT N5 Preparation Course</h4>
+                        <p class="text-muted">Intensive preparation for the JLPT N5 exam.</p>
+                        
+                        <h5 class="mt-4">Course Overview</h5>
+                        <p>This 8-week course covers all sections of the JLPT N5 exam: vocabulary, grammar, reading, and listening. Includes 5 full-length mock tests with detailed feedback.</p>
+                        
+                        <h5 class="mt-4">Price: ৳6,499/month</h5>
+                    `;
+                } else {
+                    content = '<p>Course details loading...</p>';
+                }
+                
+                $('#courseDetailBody').html(content);
+            }
+
+            // Smooth scrolling for anchor links
+            $('a[href^="#"]').on('click', function (e) {
+                e.preventDefault();
+                const target = $(this).attr('href');
+                if (target === '#') return;
+                
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 80
+                }, 800);
+            });
+
+            // Navbar scroll effect
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').addClass('navbar-scrolled');
+                } else {
+                    $('.navbar').removeClass('navbar-scrolled');
+                }
+            });
+
+            // Login Modal Role Selection
+            $('[data-bs-target="#loginModal"][data-role]').click(function () {
+                const role = $(this).data('role');
+                $('#selectedRole').text(role.charAt(0).toUpperCase() + role.slice(1));
+            });
+
+            // Signup role selection
+            $('#signupRole').change(function () {
+                const selectedRole = $(this).val();
+                $('#studentFields, #teacherFields, #adminFields').hide();
+                
+                if (selectedRole === 'student') {
+                    $('#studentFields').slideDown();
+                } else if (selectedRole === 'teacher') {
+                    $('#teacherFields').slideDown();
+                } else if (selectedRole === 'admin') {
+                    $('#adminFields').slideDown();
+                }
+            });
+
+            // Login form submission
+            $('#loginForm').submit(function (e) {
+                e.preventDefault();
+                const email = $('#loginEmail').val();
+                const password = $('#loginPassword').val();
+                const role = $('#selectedRole').text().toLowerCase();
+
+                let isValid = false;
+                if (role === 'student' && email === 'student@example.com' && password === 'student123') {
+                    isValid = true;
+                } else if (role === 'teacher' && email === 'teacher@example.com' && password === 'teacher123') {
+                    isValid = true;
+                } else if (role === 'admin' && email === 'admin@example.com' && password === 'admin123') {
+                    isValid = true;
+                }
+
+                if (isValid) {
+                    alert(`Login successful! Welcome ${role}.`);
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    if (modal) modal.hide();
+                    
+                    // Update navbar
+                    updateNavbarForLoggedIn(role, email);
+                } else {
+                    alert('Invalid credentials. Please check the demo credentials below.');
+                }
+            });
+
+            // Signup form submission
+            $('#signupForm').submit(function (e) {
+                e.preventDefault();
+                const password = $('#signupPassword').val();
+                const confirmPassword = $('#confirmPassword').val();
+
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long.');
+                    return;
+                }
+
+                alert('Account created successfully! Welcome to Nihongo Master.');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+                if (modal) modal.hide();
+                this.reset();
+                $('#studentFields, #teacherFields, #adminFields').hide();
+            });
+
+            function updateNavbarForLoggedIn(role, email) {
+                const navbarNav = document.querySelector('#navbarNav .navbar-nav.ms-auto');
+                if (!navbarNav) return;
+
+                const loginDropdown = document.querySelector('.nav-item.dropdown');
+                if (loginDropdown) {
+                    loginDropdown.remove();
+                }
+
+                const userMenu = document.createElement('li');
+                userMenu.className = 'nav-item dropdown';
+                userMenu.innerHTML = `
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i> ${role.charAt(0).toUpperCase() + role.slice(1)}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><h6 class="dropdown-header">${email}</h6></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                `;
+
+                navbarNav.appendChild(userMenu);
+
+                document.getElementById('logoutBtn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    location.reload();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

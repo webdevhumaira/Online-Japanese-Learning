@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/favicon-transparent.png" type="image/x-icon">
+    <title>Class System - Nihongo Master</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --deep-navy: #1A2B3C;
+            --japanese-red: #E63946;
+            --soft-gold: #FFD166;
+            --pure-white: #FFFFFF;
+            --sakura-pink: #FFB7C5;
+            --light-gray: #F5F5F5;
+            --medium-gray: #E0E0E0;
+            --dark-gray: #333333;
+            --success-green: #28a745;
+            --info-blue: #17a2b8;
+            --purple-accent: #6f42c1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            background-color: var(--pure-white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .cursor-border {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--soft-gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease, width 0.2s ease, height 0.2s ease;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, var(--japanese-red), var(--soft-gold));
+            z-index: 10001;
+            transition: width 0.1s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--japanese-red), var(--deep-navy));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--deep-navy), var(--japanese-red));
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--japanese-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--deep-navy);
+            transform: translateY(-5px);
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: var(--pure-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            z-index: 999;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--deep-navy);
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--pure-white) !important;
+        }
+
+        .navbar-brand span {
+            color: var(--japanese-red);
+        }
+
+        .nav-link {
+            color: var(--pure-white) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--soft-gold) !important;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(26, 43, 60, 0.9), rgba(26, 43, 60, 0.95)),
+                url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--pure-white);
+            padding: 150px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.1s both;
+        }
+
+        .breadcrumb-item a {
+            color: var(--soft-gold);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: var(--pure-white);
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            color: var(--pure-white);
+        }
+
+        /* Class Features Section */
+        .class-features {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .feature-card-large {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+            color: var(--pure-white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card-large:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(230, 57, 70, 0.3);
+        }
+
+        .feature-icon-large {
+            width: 80px;
+            height: 80px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            color: var(--pure-white);
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+
+        .feature-card-large h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card-large p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li i {
+            color: var(--soft-gold);
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Schedule Section */
+        .schedule-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .schedule-tabs {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-pills .nav-link {
+            color: var(--deep-navy);
+            border-radius: 0;
+            padding: 15px 25px;
+            font-weight: 600;
+            background-color: var(--light-gray);
+            margin: 0;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--pure-white);
+            color: var(--japanese-red);
+            border-bottom: 3px solid var(--japanese-red);
+        }
+
+        .schedule-table {
+            padding: 30px;
+        }
+
+        .schedule-day {
+            margin-bottom: 30px;
+        }
+
+        .schedule-day h4 {
+            color: var(--deep-navy);
+            border-bottom: 2px solid var(--soft-gold);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .class-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-left: 4px solid var(--japanese-red);
+            background-color: var(--light-gray);
+            margin-bottom: 10px;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .class-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .class-time {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-weight: 600;
+            min-width: 120px;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .class-info {
+            flex: 1;
+        }
+
+        .class-info h5 {
+            margin-bottom: 5px;
+            color: var(--deep-navy);
+        }
+
+        .class-info p {
+            margin-bottom: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .class-level {
+            background-color: var(--soft-gold);
+            color: var(--deep-navy);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Learning Methodology */
+        .methodology-section {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .methodology-timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .methodology-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--japanese-red), var(--soft-gold));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            font-size: 1.5rem;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--pure-white), 0 0 0 8px rgba(230, 57, 70, 0.2);
+        }
+
+        .timeline-content {
+            width: calc(50% - 50px);
+            padding: 30px;
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid var(--light-gray);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid var(--light-gray);
+        }
+
+        .timeline-content h3 {
+            color: var(--deep-navy);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content .time-badge {
+            display: inline-block;
+            background-color: var(--japanese-red);
+            color: var(--pure-white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        /* Classroom Experience */
+        .experience-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .experience-card {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--japanese-red);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.15);
+        }
+
+        .experience-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--deep-navy), var(--japanese-red));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: var(--pure-white);
+        }
+
+        /* Tools & Platform */
+        .tools-section {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .tool-item {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .tool-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--pure-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: var(--japanese-red);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-item h4 {
+            margin-bottom: 10px;
+            color: var(--deep-navy);
+        }
+
+        .tool-item p {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+
+        /* Class Benefits */
+        .benefits-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+            color: var(--pure-white);
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h4 {
+            margin-bottom: 5px;
+        }
+
+        .benefit-content p {
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        /* Sample Class Video */
+        .sample-class-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .video-wrapper {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(230, 57, 70, 0.5);
+        }
+
+        .play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background-color: var(--pure-white);
+            color: var(--japanese-red);
+        }
+
+        /* Class Rules */
+        .rules-section {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .rules-card {
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            border-left: 5px solid var(--japanese-red);
+        }
+
+        .rules-card h4 {
+            color: var(--deep-navy);
+            margin-bottom: 20px;
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .rules-list li i {
+            color: var(--japanese-red);
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .accordion-item {
+            border: none;
+            margin-bottom: 15px;
+            border-radius: 10px !important;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            padding: 20px 25px;
+            font-weight: 600;
+            color: var(--deep-navy);
+            background-color: var(--pure-white);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--japanese-red);
+            color: var(--pure-white);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        .accordion-body {
+            padding: 25px;
+            background-color: var(--pure-white);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--japanese-red) 0%, #b71c1c 100%);
+            color: var(--pure-white);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cta-banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-banner .btn {
+            background-color: var(--pure-white);
+            color: var(--japanese-red);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .cta-banner .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-banner .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--pure-white);
+            color: var(--pure-white);
+        }
+
+        .cta-banner .btn-outline:hover {
+            background-color: var(--pure-white);
+            color: var(--japanese-red);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--pure-white);
+        }
+
+        .footer-logo span {
+            color: var(--japanese-red);
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--soft-gold);
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--pure-white);
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--japanese-red);
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .methodology-timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-icon {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -15px;
+                right: auto;
+                border-right: 15px solid var(--light-gray);
+                border-left: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .class-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .class-time {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            
+            .class-level {
+                margin-top: 10px;
+            }
+            
+            .cta-banner h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-banner .btn {
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 120px 0 60px;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            .nav-pills .nav-link {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-border"></div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/8801XXXXXXXXX" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Nihongo<span>Master</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About Sensei</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="class-system.html">Class System</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#exam">Exams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#enroll">Enroll</a>
+                    </li>
+                    <!-- Login Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i> Login
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <h6 class="dropdown-header">Login as</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="student"><i class="fas fa-graduation-cap me-2"></i>Student</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="teacher"><i class="fas fa-chalkboard-teacher me-2"></i>Teacher</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="admin"><i class="fas fa-user-shield me-2"></i>Admin</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#signupModal"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Class System</li>
+                </ol>
+            </nav>
+            <h1>Premium Class System</h1>
+            <p>Experience our structured, interactive, and engaging Japanese learning methodology</p>
+        </div>
+    </section>
+
+    <!-- Class Features Overview -->
+    <section class="class-features">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="feature-card-large">
+                        <div class="feature-icon-large">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Live Interactive Classes</h3>
+                        <p>Real-time learning with instant feedback and interaction</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Zoom/Google Meet platform</li>
+                            <li><i class="fas fa-check-circle"></i> Two-way video/audio</li>
+                            <li><i class="fas fa-check-circle"></i> Screen sharing & whiteboard</li>
+                            <li><i class="fas fa-check-circle"></i> Breakout rooms for practice</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card-large">
+                        <div class="feature-icon-large">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Fixed Schedule</h3>
+                        <p>Consistent class timings to build learning habits</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> 3 days/week (Sun, Tue, Thu)</li>
+                            <li><i class="fas fa-check-circle"></i> 2 days/week (Mon, Wed)</li>
+                            <li><i class="fas fa-check-circle"></i> Weekend batches available</li>
+                            <li><i class="fas fa-check-circle"></i> Morning & evening options</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card-large">
+                        <div class="feature-icon-large">
+                            <i class="fas fa-file-video"></i>
+                        </div>
+                        <h3>Class Recordings</h3>
+                        <p>Never miss a lesson with recorded sessions</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Available within 24 hours</li>
+                            <li><i class="fas fa-check-circle"></i> Lifetime access</li>
+                            <li><i class="fas fa-check-circle"></i> Downloadable for offline viewing</li>
+                            <li><i class="fas fa-check-circle"></i> Searchable video library</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Schedule -->
+    <section class="schedule-section" id="schedule">
+        <div class="container">
+            <h2 class="section-title">Weekly Class Schedule</h2>
+            <p class="text-center mb-5">Choose the batch that fits your routine</p>
+            
+            <div class="schedule-tabs">
+                <ul class="nav nav-pills justify-content-center" id="scheduleTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="beginner-tab" data-bs-toggle="pill" data-bs-target="#beginner" type="button" role="tab">Beginner Batch</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="intermediate-tab" data-bs-toggle="pill" data-bs-target="#intermediate" type="button" role="tab">Intermediate Batch</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="advanced-tab" data-bs-toggle="pill" data-bs-target="#advanced" type="button" role="tab">Advanced Batch</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="weekend-tab" data-bs-toggle="pill" data-bs-target="#weekend" type="button" role="tab">Weekend Batch</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content schedule-table">
+                    <!-- Beginner Schedule -->
+                    <div class="tab-pane fade show active" id="beginner" role="tabpanel">
+                        <div class="schedule-day">
+                            <h4>Morning Batch (10:00 AM - 11:30 AM)</h4>
+                            <div class="class-item">
+                                <span class="class-time">Sunday</span>
+                                <div class="class-info">
+                                    <h5>Hiragana & Basic Greetings</h5>
+                                    <p>Lesson 1-2: Learn 20 hiragana characters and basic greetings</p>
+                                </div>
+                                <span class="class-level">Beginner</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Tuesday</span>
+                                <div class="class-info">
+                                    <h5>Hiragana & Numbers</h5>
+                                    <p>Lesson 3-4: Complete hiragana and numbers 1-100</p>
+                                </div>
+                                <span class="class-level">Beginner</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Thursday</span>
+                                <div class="class-info">
+                                    <h5>Basic Sentence Structure</h5>
+                                    <p>Lesson 5-6: Introduction to particles and basic sentences</p>
+                                </div>
+                                <span class="class-level">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-day">
+                            <h4>Evening Batch (7:30 PM - 9:00 PM)</h4>
+                            <div class="class-item">
+                                <span class="class-time">Sunday</span>
+                                <div class="class-info">
+                                    <h5>Katakana Introduction</h5>
+                                    <p>Lesson 7-8: Learn katakana characters</p>
+                                </div>
+                                <span class="class-level">Beginner</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Tuesday</span>
+                                <div class="class-info">
+                                    <h5>Everyday Vocabulary</h5>
+                                    <p>Lesson 9-10: Common words and phrases</p>
+                                </div>
+                                <span class="class-level">Beginner</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Thursday</span>
+                                <div class="class-info">
+                                    <h5>Practice Session</h5>
+                                    <p>Speaking practice and review</p>
+                                </div>
+                                <span class="class-level">Beginner</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Intermediate Schedule -->
+                    <div class="tab-pane fade" id="intermediate" role="tabpanel">
+                        <div class="schedule-day">
+                            <h4>Morning Batch (10:00 AM - 11:30 AM)</h4>
+                            <div class="class-item">
+                                <span class="class-time">Monday</span>
+                                <div class="class-info">
+                                    <h5>Kanji Introduction</h5>
+                                    <p>Lesson 1-2: First 20 kanji characters</p>
+                                </div>
+                                <span class="class-level">Intermediate</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Wednesday</span>
+                                <div class="class-info">
+                                    <h5>Grammar Patterns</h5>
+                                    <p>Lesson 3-4: Te-form and past tense</p>
+                                </div>
+                                <span class="class-level">Intermediate</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Friday</span>
+                                <div class="class-info">
+                                    <h5>Conversation Practice</h5>
+                                    <p>Role-play and speaking activities</p>
+                                </div>
+                                <span class="class-level">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Schedule -->
+                    <div class="tab-pane fade" id="advanced" role="tabpanel">
+                        <div class="schedule-day">
+                            <h4>Evening Batch (7:30 PM - 9:30 PM)</h4>
+                            <div class="class-item">
+                                <span class="class-time">Monday</span>
+                                <div class="class-info">
+                                    <h5>Business Keigo</h5>
+                                    <p>Honorific and humble language</p>
+                                </div>
+                                <span class="class-level">Advanced</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Wednesday</span>
+                                <div class="class-info">
+                                    <h5>Discussion & Debate</h5>
+                                    <p>Current topics in Japanese</p>
+                                </div>
+                                <span class="class-level">Advanced</span>
+                            </div>
+                            <div class="class-item">
+                                <span class="class-time">Friday</span>
+                                <div class="class-info">
+                                    <h5>JLPT N2 Prep</h5>
+                                    <p>Mock tests and strategies</p>
+                                </div>
+                                <span class="class-level">Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Weekend Schedule -->
+                    <div class="tab-pane fade" id="weekend" role="tabpanel">
+                        <div class="schedule-day">
+                            <h4>Saturday Batch (3:00 PM - 6:00 PM)</h4>
+                            <div class="class-item">
+                                <span class="class-time">Saturday</span>
+                                <div class="class-info">
+                                    <h5>Intensive Japanese</h5>
+                                    <p>3-hour comprehensive session covering all skills</p>
+                                </div>
+                                <span class="class-level">All Levels</span>
+                            </div>
+                        </div>
+                        <div class="schedule-day">
+                            <h4>Friday Batch (9:00 AM - 12:00 PM)</h4>
+                            <div class="class-item">
+                                <span class="class-time">Friday</span>
+                                <div class="class-info">
+                                    <h5>Weekend Warrior</h5>
+                                    <p>Fast-track course for working professionals</p>
+                                </div>
+                                <span class="class-level">All Levels</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Methodology Timeline -->
+    <section class="methodology-section">
+        <div class="container">
+            <h2 class="section-title">Our Learning Methodology</h2>
+            <p class="text-center mb-5">A structured approach to Japanese language mastery</p>
+            
+            <div class="methodology-timeline">
+                <!-- Pre-class -->
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="time-badge">Before Class</span>
+                        <h3>Pre-class Preparation</h3>
+                        <p>Study materials and preview videos are shared 24 hours before each class. Students review vocabulary and basic concepts to maximize in-class learning.</p>
+                        <ul class="mt-3">
+                            <li><i class="fas fa-file-pdf me-2 text-danger"></i> PDF notes and worksheets</li>
+                            <li><i class="fas fa-play-circle me-2 text-primary"></i> Preview videos (5-10 minutes)</li>
+                            <li><i class="fas fa-tasks me-2 text-success"></i> Quick pre-quiz to assess knowledge</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- During Class -->
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="time-badge">During Class</span>
+                        <h3>Interactive Live Session</h3>
+                        <p>90-minute live class with direct interaction. Students participate actively through speaking, writing, and Q&A.</p>
+                        <ul class="mt-3">
+                            <li><i class="fas fa-comments me-2 text-info"></i> Real-time conversation practice</li>
+                            <li><i class="fas fa-pencil-alt me-2 text-warning"></i> Guided writing exercises</li>
+                            <li><i class="fas fa-question-circle me-2 text-danger"></i> Instant doubt clearing</li>
+                            <li><i class="fas fa-users me-2 text-success"></i> Pair/group activities in breakout rooms</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- After Class -->
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="time-badge">After Class</span>
+                        <h3>Post-class Practice</h3>
+                        <p>Reinforce learning with homework, assignments, and access to recorded sessions.</p>
+                        <ul class="mt-3">
+                            <li><i class="fas fa-download me-2 text-primary"></i> Class recording within 24h</li>
+                            <li><i class="fas fa-home me-2 text-success"></i> Homework assignments</li>
+                            <li><i class="fas fa-microphone-alt me-2 text-info"></i> Speaking practice submission</li>
+                            <li><i class="fas fa-comment-dots me-2 text-warning"></i> Teacher feedback on work</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Weekly Review -->
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="time-badge">Weekly</span>
+                        <h3>Weekly Review & Assessment</h3>
+                        <p>End-of-week review session to consolidate learning and identify areas needing improvement.</p>
+                        <ul class="mt-3">
+                            <li><i class="fas fa-quiz me-2 text-danger"></i> Weekly quiz</li>
+                            <li><i class="fas fa-chart-line me-2 text-success"></i> Progress tracking</li>
+                            <li><i class="fas fa-comment-medical me-2 text-info"></i> Individual feedback session</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classroom Experience -->
+    <section class="experience-section">
+        <div class="container">
+            <h2 class="section-title">The Nihongo Master Classroom Experience</h2>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in">
+                    <div class="experience-card">
+                        <div class="experience-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <h4>Friendly Atmosphere</h4>
+                        <p>Learn in a supportive, judgment-free environment where making mistakes is part of the journey.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="experience-card">
+                        <div class="experience-icon">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <h4>Speaking First Approach</h4>
+                        <p>Emphasis on spoken Japanese from day one. You'll speak in every class.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="experience-card">
+                        <div class="experience-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h4>Personal Attention</h4>
+                        <p>Small class sizes (max 12 students) ensure individual attention and feedback.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="experience-card">
+                        <div class="experience-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h4>Gamified Learning</h4>
+                        <p>Engaging activities, games, and challenges to make learning fun and effective.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools & Platform -->
+    <section class="tools-section">
+        <div class="container">
+            <h2 class="section-title">Learning Tools & Platform</h2>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fab fa-zoom"></i>
+                        </div>
+                        <h4>Zoom</h4>
+                        <p>Live video classes with HD quality</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left" data-aos-delay="50">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <h4>Google Classroom</h4>
+                        <p>Assignment submission & feedback</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left" data-aos-delay="100">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Mobile App</h4>
+                        <p>Learn on-the-go with our app</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left" data-aos-delay="150">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-powerpoint"></i>
+                        </div>
+                        <h4>Digital Materials</h4>
+                        <p>PDFs, slides, and worksheets</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left" data-aos-delay="200">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h4>Audio Lessons</h4>
+                        <p>Listening practice materials</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left" data-aos-delay="250">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h4>Video Library</h4>
+                        <p>Recorded sessions archive</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left" data-aos-delay="300">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h4>Discussion Forum</h4>
+                        <p>24/7 peer & teacher support</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-6" data-aos="flip-left" data-aos-delay="350">
+                    <div class="tool-item">
+                        <div class="tool-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h4>Progress Tracker</h4>
+                        <p>Monitor your improvement</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Class Benefits -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2 class="mb-4">Why Students Love Our Classes</h2>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Flexible Scheduling</h4>
+                            <p>Multiple batch timings to accommodate students, professionals, and homemakers</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Small Batch Size</h4>
+                            <p>Maximum 12 students per batch for personalized attention</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Experienced Sensei</h4>
+                            <p>JLPT N1 certified instructor with 10+ years of teaching experience</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Affordable Pricing</h4>
+                            <p>Quality education at reasonable rates with installment options</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="bg-white p-4 rounded-4 shadow-lg">
+                        <h4 class="text-center mb-4">Class Statistics</h4>
+                        <div class="row text-center">
+                            <div class="col-6 mb-4">
+                                <div class="display-4 text-danger fw-bold">500+</div>
+                                <p class="text-muted">Students Trained</p>
+                            </div>
+                            <div class="col-6 mb-4">
+                                <div class="display-4 text-danger fw-bold">98%</div>
+                                <p class="text-muted">Satisfaction Rate</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="display-4 text-danger fw-bold">12</div>
+                                <p class="text-muted">Max Batch Size</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="display-4 text-danger fw-bold">24/7</div>
+                                <p class="text-muted">Support Available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Class Video -->
+    <section class="sample-class-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2 class="mb-4">Experience a Live Class</h2>
+                    <p class="lead mb-4">Watch a recording of our actual beginner class to see our teaching style and methodology in action.</p>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-3"><i class="fas fa-check-circle text-danger me-2"></i> Real classroom interaction</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-danger me-2"></i> Teaching pace and style</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-danger me-2"></i> Student participation examples</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-danger me-2"></i> Materials and resources used</li>
+                    </ul>
+                    <a href="#enroll" class="btn btn-danger btn-lg">Book Free Trial Class</a>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="video-wrapper">
+                        <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Sample Class" class="img-fluid">
+                        <div class="play-button" data-bs-toggle="modal" data-bs-target="#videoModal">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Class Rules & Guidelines -->
+    <section class="rules-section">
+        <div class="container">
+            <h2 class="section-title">Class Rules & Guidelines</h2>
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="rules-card">
+                        <h4><i class="fas fa-clock me-2 text-danger"></i> Punctuality</h4>
+                        <ul class="rules-list">
+                            <li><i class="fas fa-angle-right"></i> Join class 5 minutes before start time</li>
+                            <li><i class="fas fa-angle-right"></i> Late entries may miss important instructions</li>
+                            <li><i class="fas fa-angle-right"></i> Inform sensei in advance if delayed</li>
+                            <li><i class="fas fa-angle-right"></i> 3 late arrivals = 1 absence</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="rules-card">
+                        <h4><i class="fas fa-video me-2 text-danger"></i> Camera & Audio</h4>
+                        <ul class="rules-list">
+                            <li><i class="fas fa-angle-right"></i> Camera must be ON during class</li>
+                            <li><i class="fas fa-angle-right"></i> Mute when not speaking</li>
+                            <li><i class="fas fa-angle-right"></i> Use headset for better audio</li>
+                            <li><i class="fas fa-angle-right"></i> Find quiet space for class</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="rules-card">
+                        <h4><i class="fas fa-tasks me-2 text-danger"></i> Homework & Participation</h4>
+                        <ul class="rules-list">
+                            <li><i class="fas fa-angle-right"></i> Complete assignments on time</li>
+                            <li><i class="fas fa-angle-right"></i> Active participation required</li>
+                            <li><i class="fas fa-angle-right"></i> Ask questions freely</li>
+                            <li><i class="fas fa-angle-right"></i> Respect all classmates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    What if I miss a live class?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Don't worry! All classes are recorded and uploaded within 24 hours. You can watch the recording at your convenience. However, we recommend attending live classes for maximum interaction and practice opportunities.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    How are the classes conducted?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Classes are conducted live via Zoom. You'll receive a meeting link before each class. We use screen sharing, whiteboard, breakout rooms, and other interactive features to make learning engaging and effective.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Can I switch batches if my schedule changes?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, you can switch to another batch within the same course level, subject to availability. Please inform us at least 24 hours in advance to arrange the transfer.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    What technical requirements do I need?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You need a stable internet connection, a device with camera and microphone (laptop/desktop preferred), and Zoom installed. Headphones are recommended for better audio quality.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Is there any age restriction?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Our regular courses are for ages 15 and above. We have special kids' courses for ages 6-14 with age-appropriate teaching methods and materials.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2>Ready to Start Your Japanese Journey?</h2>
+            <p>Join our upcoming batch and experience the Nihongo Master difference</p>
+            <a href="index.html#enroll" class="btn btn-light">Book Free Trial</a>
+            <a href="courses.html" class="btn btn-outline">View Courses</a>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sample Class Recording</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=ilJZ0TwOa2T6qT1D" title="Sample Class" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-logo">Nihongo<span>Master</span></div>
+                    <p>Learn authentic Japanese language and culture from experienced instructors in the comfort of your home.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <a href="index.html" class="footer-link">Home</a>
+                    <a href="index.html#about" class="footer-link">About Sensei</a>
+                    <a href="courses.html" class="footer-link">Courses</a>
+                    <a href="class-system.html" class="footer-link">Class System</a>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Resources</h5>
+                    <a href="index.html#exam" class="footer-link">Exams</a>
+                    <a href="index.html#why-us" class="footer-link">Why Choose Us</a>
+                    <a href="index.html#enroll" class="footer-link">Enrollment</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@nihongomaster.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +880 1XXX-XXXXXX</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Dhaka, Bangladesh</p>
+                    <p class="mt-3">© 2023 Nihongo Master. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal (Same as index.html) -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login as <span id="selectedRole">Student</span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-decoration-none">Forgot Password?</a>
+                        </div>
+                    </form>
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6 class="mb-2">Demo Credentials:</h6>
+                        <div class="small">
+                            <p class="mb-1"><strong>Student:</strong> student@example.com / student123</p>
+                            <p class="mb-1"><strong>Teacher:</strong> teacher@example.com / teacher123</p>
+                            <p class="mb-0"><strong>Admin:</strong> admin@example.com / admin123</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="mb-0">Don't have an account? <a href="#" data-bs-toggle="modal"
+                            data-bs-target="#signupModal" data-bs-dismiss="modal">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal (Same as index.html) -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Create New Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="signupPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupRole" class="form-label">I want to join as</label>
+                            <select class="form-select" id="signupRole" required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="signupPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="signupPassword" required>
+                                <small class="text-muted">Minimum 8 characters</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                            </div>
+                        </div>
+                        <div id="studentFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Student Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="studentLevel" class="form-label">Current Japanese Level</label>
+                                    <select class="form-select" id="studentLevel">
+                                        <option value="beginner">Beginner (No experience)</option>
+                                        <option value="beginner2">Beginner (Some Hiragana/Katakana)</option>
+                                        <option value="intermediate">Intermediate (Basic conversation)</option>
+                                        <option value="advanced">Advanced (JLPT N3 or above)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="studentCourse" class="form-label">Interested Course</label>
+                                    <select class="form-select" id="studentCourse">
+                                        <option value="beginner">Beginner Japanese</option>
+                                        <option value="intermediate">Intermediate Japanese</option>
+                                        <option value="advanced">Conversational Mastery</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="teacherFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Teacher Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="teacherQualification" class="form-label">Qualification</label>
+                                    <input type="text" class="form-control" id="teacherQualification"
+                                        placeholder="e.g., JLPT N1, Teaching Experience">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="teacherSpecialization" class="form-label">Specialization</label>
+                                    <select class="form-select" id="teacherSpecialization">
+                                        <option value="beginner">Beginner Level</option>
+                                        <option value="intermediate">Intermediate Level</option>
+                                        <option value="advanced">Advanced Level</option>
+                                        <option value="jlpt">JLPT Preparation</option>
+                                        <option value="conversation">Conversation Practice</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teacherBio" class="form-label">Short Bio</label>
+                                <textarea class="form-control" id="teacherBio" rows="2"
+                                    placeholder="Tell us about your teaching experience..."></textarea>
+                            </div>
+                        </div>
+                        <div id="adminFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Admin Information</h6>
+                            <div class="mb-3">
+                                <label for="adminDepartment" class="form-label">Department</label>
+                                <input type="text" class="form-control" id="adminDepartment" value="Administration"
+                                    readonly>
+                                <small class="text-muted">Admin accounts require approval from super admin</small>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
+                            <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms of
+                                    Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p class="mb-0">Already have an account? <a href="#" data-bs-toggle="modal"
+                            data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+
+            // Custom Cursor
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-border');
+
+            document.addEventListener('mousemove', function (e) {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            });
+
+            // Add hover effect to interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .feature-card-large, .class-item, .tool-item, .social-icon');
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursorOutline.style.width = '60px';
+                    cursorOutline.style.height = '60px';
+                    cursorOutline.style.borderColor = '#FFD166';
+                });
+
+                element.addEventListener('mouseleave', () => {
+                    cursorOutline.style.width = '40px';
+                    cursorOutline.style.height = '40px';
+                    cursorOutline.style.borderColor = '#FFD166';
+                });
+            });
+
+            // Scroll Progress Bar
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                document.querySelector('.scroll-progress').style.width = scrollPercentage + '%';
+            });
+
+            // Scroll to Top Button
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('active');
+                } else {
+                    scrollToTopBtn.classList.remove('active');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Navbar scroll effect
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').addClass('navbar-scrolled');
+                } else {
+                    $('.navbar').removeClass('navbar-scrolled');
+                }
+            });
+
+            // Login Modal Role Selection
+            $('[data-bs-target="#loginModal"][data-role]').click(function () {
+                const role = $(this).data('role');
+                $('#selectedRole').text(role.charAt(0).toUpperCase() + role.slice(1));
+            });
+
+            // Signup role selection
+            $('#signupRole').change(function () {
+                const selectedRole = $(this).val();
+                $('#studentFields, #teacherFields, #adminFields').hide();
+                
+                if (selectedRole === 'student') {
+                    $('#studentFields').slideDown();
+                } else if (selectedRole === 'teacher') {
+                    $('#teacherFields').slideDown();
+                } else if (selectedRole === 'admin') {
+                    $('#adminFields').slideDown();
+                }
+            });
+
+            // Login form submission
+            $('#loginForm').submit(function (e) {
+                e.preventDefault();
+                const email = $('#loginEmail').val();
+                const password = $('#loginPassword').val();
+                const role = $('#selectedRole').text().toLowerCase();
+
+                let isValid = false;
+                if (role === 'student' && email === 'student@example.com' && password === 'student123') {
+                    isValid = true;
+                } else if (role === 'teacher' && email === 'teacher@example.com' && password === 'teacher123') {
+                    isValid = true;
+                } else if (role === 'admin' && email === 'admin@example.com' && password === 'admin123') {
+                    isValid = true;
+                }
+
+                if (isValid) {
+                    alert(`Login successful! Welcome ${role}.`);
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    if (modal) modal.hide();
+                    
+                    // Update navbar
+                    updateNavbarForLoggedIn(role, email);
+                } else {
+                    alert('Invalid credentials. Please check the demo credentials below.');
+                }
+            });
+
+            // Signup form submission
+            $('#signupForm').submit(function (e) {
+                e.preventDefault();
+                const password = $('#signupPassword').val();
+                const confirmPassword = $('#confirmPassword').val();
+
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long.');
+                    return;
+                }
+
+                alert('Account created successfully! Welcome to Nihongo Master.');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+                if (modal) modal.hide();
+                this.reset();
+                $('#studentFields, #teacherFields, #adminFields').hide();
+            });
+
+            function updateNavbarForLoggedIn(role, email) {
+                const navbarNav = document.querySelector('#navbarNav .navbar-nav.ms-auto');
+                if (!navbarNav) return;
+
+                const loginDropdown = document.querySelector('.nav-item.dropdown');
+                if (loginDropdown) {
+                    loginDropdown.remove();
+                }
+
+                const userMenu = document.createElement('li');
+                userMenu.className = 'nav-item dropdown';
+                userMenu.innerHTML = `
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i> ${role.charAt(0).toUpperCase() + role.slice(1)}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><h6 class="dropdown-header">${email}</h6></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                `;
+
+                navbarNav.appendChild(userMenu);
+
+                document.getElementById('logoutBtn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    location.reload();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

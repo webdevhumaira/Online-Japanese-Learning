@@ -1,0 +1,2335 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/favicon-transparent.png" type="image/x-icon">
+    <title>Exams & Assessments - Nihongo Master</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --deep-navy: #1A2B3C;
+            --japanese-red: #E63946;
+            --soft-gold: #FFD166;
+            --pure-white: #FFFFFF;
+            --sakura-pink: #FFB7C5;
+            --light-gray: #F5F5F5;
+            --medium-gray: #E0E0E0;
+            --dark-gray: #333333;
+            --success-green: #28a745;
+            --info-blue: #17a2b8;
+            --warning-orange: #fd7e14;
+            --purple-accent: #6f42c1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            background-color: var(--pure-white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .cursor-border {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--soft-gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease, width 0.2s ease, height 0.2s ease;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, var(--japanese-red), var(--soft-gold));
+            z-index: 10001;
+            transition: width 0.1s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--japanese-red), var(--deep-navy));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--deep-navy), var(--japanese-red));
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--japanese-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--deep-navy);
+            transform: translateY(-5px);
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: var(--pure-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            z-index: 999;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--deep-navy);
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--pure-white) !important;
+        }
+
+        .navbar-brand span {
+            color: var(--japanese-red);
+        }
+
+        .nav-link {
+            color: var(--pure-white) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--soft-gold) !important;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(26, 43, 60, 0.9), rgba(26, 43, 60, 0.95)),
+                url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--pure-white);
+            padding: 150px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.1s both;
+        }
+
+        .breadcrumb-item a {
+            color: var(--soft-gold);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: var(--pure-white);
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            color: var(--pure-white);
+        }
+
+        /* Exam Levels Section */
+        .exam-levels {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .level-card {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+            color: var(--pure-white);
+            border-radius: 20px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(230, 57, 70, 0.3);
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .level-card:hover::before {
+            opacity: 1;
+        }
+
+        .level-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+
+        .level-card h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background-color: var(--soft-gold);
+            color: var(--deep-navy);
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .level-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--soft-gold);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* JLPT Info Section */
+        .jlpt-info {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .jlpt-card {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--japanese-red);
+        }
+
+        .jlpt-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.15);
+        }
+
+        .jlpt-level {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--japanese-red);
+            margin-bottom: 15px;
+        }
+
+        .jlpt-details {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .jlpt-details li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .jlpt-details li i {
+            color: var(--success-green);
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .jlpt-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--deep-navy);
+            margin-top: 20px;
+        }
+
+        /* Practice Tests Section */
+        .practice-tests {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .test-card {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .test-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.15);
+        }
+
+        .test-header {
+            background: linear-gradient(135deg, var(--deep-navy), var(--japanese-red));
+            color: var(--pure-white);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .test-header h4 {
+            margin-bottom: 5px;
+        }
+
+        .test-header .test-level {
+            background-color: var(--soft-gold);
+            color: var(--deep-navy);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .test-body {
+            padding: 25px;
+        }
+
+        .test-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .test-meta i {
+            color: var(--japanese-red);
+            margin-right: 5px;
+        }
+
+        .test-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .test-features li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .test-features li i {
+            color: var(--success-green);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .test-btn {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid var(--deep-navy);
+        }
+
+        .test-btn:hover {
+            background-color: var(--japanese-red);
+            border-color: var(--japanese-red);
+            color: var(--pure-white);
+        }
+
+        /* Interactive Quiz Section */
+        .quiz-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+            color: var(--pure-white);
+        }
+
+        .quiz-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .quiz-timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--soft-gold);
+        }
+
+        .quiz-progress {
+            font-size: 1.1rem;
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-option {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: var(--soft-gold);
+        }
+
+        .quiz-option.selected {
+            background-color: var(--japanese-red);
+            border-color: var(--pure-white);
+        }
+
+        .quiz-option.correct {
+            background-color: var(--success-green);
+            border-color: var(--pure-white);
+        }
+
+        .quiz-option.wrong {
+            background-color: var(--japanese-red);
+            border-color: var(--pure-white);
+            opacity: 0.7;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .quiz-btn {
+            background-color: var(--soft-gold);
+            color: var(--deep-navy);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 209, 102, 0.4);
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Results Chart */
+        .results-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .chart-container {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: linear-gradient(135deg, var(--deep-navy), var(--japanese-red));
+            color: var(--pure-white);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            height: 100%;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .score-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Exam Schedule */
+        .exam-schedule {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .schedule-card {
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            padding: 25px;
+            height: 100%;
+            border-left: 5px solid var(--japanese-red);
+        }
+
+        .schedule-date {
+            color: var(--japanese-red);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .schedule-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .schedule-details {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .schedule-badge {
+            display: inline-block;
+            background-color: var(--soft-gold);
+            color: var(--deep-navy);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Assessment Types */
+        .assessment-types {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .type-card {
+            background-color: var(--pure-white);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.15);
+        }
+
+        .type-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--japanese-red), var(--soft-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            color: var(--pure-white);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--pure-white);
+        }
+
+        .testimonial-card {
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 5rem;
+            color: var(--japanese-red);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .author-info h5 {
+            margin-bottom: 0;
+        }
+
+        .author-info p {
+            margin-bottom: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-score {
+            display: inline-block;
+            background-color: var(--success-green);
+            color: var(--pure-white);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .accordion-item {
+            border: none;
+            margin-bottom: 15px;
+            border-radius: 10px !important;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            padding: 20px 25px;
+            font-weight: 600;
+            color: var(--deep-navy);
+            background-color: var(--pure-white);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--japanese-red);
+            color: var(--pure-white);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        .accordion-body {
+            padding: 25px;
+            background-color: var(--pure-white);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--japanese-red) 0%, #b71c1c 100%);
+            color: var(--pure-white);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cta-banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-banner .btn {
+            background-color: var(--pure-white);
+            color: var(--japanese-red);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .cta-banner .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-banner .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--pure-white);
+            color: var(--pure-white);
+        }
+
+        .cta-banner .btn-outline:hover {
+            background-color: var(--pure-white);
+            color: var(--japanese-red);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--pure-white);
+        }
+
+        .footer-logo span {
+            color: var(--japanese-red);
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--soft-gold);
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--pure-white);
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--japanese-red);
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .quiz-container {
+                padding: 20px;
+            }
+            
+            .quiz-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .cta-banner h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-banner .btn {
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 120px 0 60px;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-border"></div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/8801XXXXXXXXX" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Nihongo<span>Master</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About Sensei</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="class-system.html">Class System</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="exams.html">Exams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#enroll">Enroll</a>
+                    </li>
+                    <!-- Login Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i> Login
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <h6 class="dropdown-header">Login as</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="student"><i class="fas fa-graduation-cap me-2"></i>Student</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="teacher"><i class="fas fa-chalkboard-teacher me-2"></i>Teacher</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="admin"><i class="fas fa-user-shield me-2"></i>Admin</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#signupModal"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Exams & Assessments</li>
+                </ol>
+            </nav>
+            <h1>Exam & Assessment System</h1>
+            <p>Track your progress, practice with mock tests, and prepare for JLPT certification</p>
+        </div>
+    </section>
+
+    <!-- Exam Levels Overview -->
+    <section class="exam-levels">
+        <div class="container">
+            <h2 class="section-title">Two-Tier Assessment System</h2>
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="level-card">
+                        <div class="level-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <span class="level-badge">Level 1</span>
+                        <h3>Simple Online Quiz</h3>
+                        <p>Perfect for beginners and weekly assessments. Auto-graded with instant results and feedback.</p>
+                        
+                        <div class="level-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">5-10</div>
+                                <div class="stat-label">Questions</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">5-15</div>
+                                <div class="stat-label">Minutes</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">Auto</div>
+                                <div class="stat-label">Grading</div>
+                            </div>
+                        </div>
+                        
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Multiple choice questions</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Instant score calculation</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Optional timer for practice</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Pass/fail indication</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Explanation for wrong answers</li>
+                        </ul>
+                        
+                        <button class="btn btn-danger mt-3" onclick="scrollToQuiz()">Try Sample Quiz <i class="fas fa-arrow-right ms-2"></i></button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="level-card">
+                        <div class="level-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <span class="level-badge">Level 2</span>
+                        <h3>Student Dashboard</h3>
+                        <p>Premium exam system for registered students with detailed analytics and progress tracking.</p>
+                        
+                        <div class="level-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">Full</div>
+                                <div class="stat-label">Length</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">Timed</div>
+                                <div class="stat-label">Sessions</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">Detailed</div>
+                                <div class="stat-label">Reports</div>
+                            </div>
+                        </div>
+                        
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Student login/registration system</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Assigned exams with time limits</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Progress tracking and history</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Chapter-wise tests</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Teacher feedback on weak areas</li>
+                        </ul>
+                        
+                        <button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#loginModal">Login to Access <i class="fas fa-lock ms-2"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JLPT Information -->
+    <section class="jlpt-info">
+        <div class="container">
+            <h2 class="section-title">JLPT Preparation Courses</h2>
+            <p class="text-center mb-5">Comprehensive preparation for all levels of the Japanese Language Proficiency Test</p>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="flip-left">
+                    <div class="jlpt-card">
+                        <div class="jlpt-level">N5</div>
+                        <h4>Beginner Level</h4>
+                        <ul class="jlpt-details">
+                            <li><i class="fas fa-book"></i> ~100 Kanji</li>
+                            <li><i class="fas fa-font"></i> ~800 Vocabulary</li>
+                            <li><i class="fas fa-clock"></i> 8 Weeks Course</li>
+                            <li><i class="fas fa-check-circle"></i> 5 Mock Tests</li>
+                        </ul>
+                        <div class="jlpt-price">৳6,499/month</div>
+                        <a href="courses.html" class="btn btn-outline-danger w-100 mt-3">View Course</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="100">
+                    <div class="jlpt-card">
+                        <div class="jlpt-level">N4</div>
+                        <h4>Elementary Level</h4>
+                        <ul class="jlpt-details">
+                            <li><i class="fas fa-book"></i> ~300 Kanji</li>
+                            <li><i class="fas fa-font"></i> ~1,500 Vocabulary</li>
+                            <li><i class="fas fa-clock"></i> 10 Weeks Course</li>
+                            <li><i class="fas fa-check-circle"></i> 6 Mock Tests</li>
+                        </ul>
+                        <div class="jlpt-price">৳7,499/month</div>
+                        <a href="courses.html" class="btn btn-outline-danger w-100 mt-3">View Course</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="200">
+                    <div class="jlpt-card">
+                        <div class="jlpt-level">N3</div>
+                        <h4>Intermediate Level</h4>
+                        <ul class="jlpt-details">
+                            <li><i class="fas fa-book"></i> ~650 Kanji</li>
+                            <li><i class="fas fa-font"></i> ~3,750 Vocabulary</li>
+                            <li><i class="fas fa-clock"></i> 12 Weeks Course</li>
+                            <li><i class="fas fa-check-circle"></i> 8 Mock Tests</li>
+                        </ul>
+                        <div class="jlpt-price">৳8,999/month</div>
+                        <a href="courses.html" class="btn btn-outline-danger w-100 mt-3">View Course</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="300">
+                    <div class="jlpt-card">
+                        <div class="jlpt-level">N2</div>
+                        <h4>Pre-Advanced</h4>
+                        <ul class="jlpt-details">
+                            <li><i class="fas fa-book"></i> ~1,000 Kanji</li>
+                            <li><i class="fas fa-font"></i> ~6,000 Vocabulary</li>
+                            <li><i class="fas fa-clock"></i> 14 Weeks Course</li>
+                            <li><i class="fas fa-check-circle"></i> 10 Mock Tests</li>
+                        </ul>
+                        <div class="jlpt-price">৳10,499/month</div>
+                        <a href="courses.html" class="btn btn-outline-danger w-100 mt-3">View Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Quiz Section -->
+    <section class="quiz-section" id="sample-quiz">
+        <div class="container">
+            <h2 class="section-title text-white">Try a Sample Quiz</h2>
+            <p class="text-center text-white-50 mb-5">Test your Japanese knowledge with this quick 5-question quiz</p>
+            
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-header">
+                    <div class="quiz-progress" id="questionCounter">Question 1 of 5</div>
+                    <div class="quiz-timer" id="quizTimer">05:00</div>
+                </div>
+                
+                <div id="quizContent">
+                    <div class="quiz-question" id="questionText">Loading question...</div>
+                    
+                    <div class="quiz-options" id="quizOptions">
+                        <!-- Options will be dynamically inserted -->
+                    </div>
+                    
+                    <div class="quiz-footer">
+                        <button class="quiz-btn" id="prevBtn" disabled><i class="fas fa-arrow-left me-2"></i>Previous</button>
+                        <button class="quiz-btn" id="nextBtn">Next</button>
+                    </div>
+                </div>
+                
+                <div id="quizResults" style="display: none;">
+                    <h3 class="text-center mb-4">Quiz Complete!</h3>
+                    <div class="text-center mb-4">
+                        <div class="display-1 fw-bold text-warning" id="finalScore">0/5</div>
+                        <p class="lead" id="resultMessage">Great job!</p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h5>Your Performance:</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>Correct Answers</span>
+                                <span id="correctCount">0</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" id="correctBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>Incorrect Answers</span>
+                                <span id="incorrectCount">0</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" id="incorrectBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-dark rounded">
+                        <h5><i class="fas fa-lightbulb text-warning me-2"></i>Teacher's Tip:</h5>
+                        <p id="teacherTip">Great start! Practice more to improve your score.</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="quiz-btn me-2" id="retryQuizBtn"><i class="fas fa-redo me-2"></i>Try Again</button>
+                        <button class="quiz-btn" id="newQuizBtn">New Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practice Tests -->
+    <section class="practice-tests">
+        <div class="container">
+            <h2 class="section-title">Practice Tests Available</h2>
+            <p class="text-center mb-5">Choose from various test types to practice specific skills</p>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>Hiragana Test</h4>
+                            <span class="test-level">Beginner</span>
+                        </div>
+                        <div class="test-body">
+                            <div class="test-meta">
+                                <span><i class="far fa-clock"></i> 10 mins</span>
+                                <span><i class="fas fa-question-circle"></i> 20 questions</span>
+                                <span><i class="fas fa-trophy"></i> 80% pass</span>
+                            </div>
+                            <ul class="test-features">
+                                <li><i class="fas fa-check"></i> All 46 basic hiragana</li>
+                                <li><i class="fas fa-check"></i> Dakuten & handakuten</li>
+                                <li><i class="fas fa-check"></i> Combination characters</li>
+                                <li><i class="fas fa-check"></i> Reading practice</li>
+                            </ul>
+                            <button class="test-btn" onclick="startSpecificQuiz('hiragana')">Take Test</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>Katakana Test</h4>
+                            <span class="test-level">Beginner</span>
+                        </div>
+                        <div class="test-body">
+                            <div class="test-meta">
+                                <span><i class="far fa-clock"></i> 10 mins</span>
+                                <span><i class="fas fa-question-circle"></i> 20 questions</span>
+                                <span><i class="fas fa-trophy"></i> 80% pass</span>
+                            </div>
+                            <ul class="test-features">
+                                <li><i class="fas fa-check"></i> All 46 basic katakana</li>
+                                <li><i class="fas fa-check"></i> Foreign words practice</li>
+                                <li><i class="fas fa-check"></i> Combination sounds</li>
+                                <li><i class="fas fa-check"></i> Long vowels & double consonants</li>
+                            </ul>
+                            <button class="test-btn" onclick="startSpecificQuiz('katakana')">Take Test</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>Kanji Test (N5)</h4>
+                            <span class="test-level">Beginner</span>
+                        </div>
+                        <div class="test-body">
+                            <div class="test-meta">
+                                <span><i class="far fa-clock"></i> 15 mins</span>
+                                <span><i class="fas fa-question-circle"></i> 25 questions</span>
+                                <span><i class="fas fa-trophy"></i> 70% pass</span>
+                            </div>
+                            <ul class="test-features">
+                                <li><i class="fas fa-check"></i> 100 essential kanji</li>
+                                <li><i class="fas fa-check"></i> On'yomi & Kun'yomi</li>
+                                <li><i class="fas fa-check"></i> Stroke order recognition</li>
+                                <li><i class="fas fa-check"></i> Compound words</li>
+                            </ul>
+                            <button class="test-btn" onclick="startSpecificQuiz('kanji-n5')">Take Test</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>Grammar Test (N5)</h4>
+                            <span class="test-level">Beginner</span>
+                        </div>
+                        <div class="test-body">
+                            <div class="test-meta">
+                                <span><i class="far fa-clock"></i> 20 mins</span>
+                                <span><i class="fas fa-question-circle"></i> 30 questions</span>
+                                <span><i class="fas fa-trophy"></i> 70% pass</span>
+                            </div>
+                            <ul class="test-features">
+                                <li><i class="fas fa-check"></i> Particles (は,が,を,に,で)</li>
+                                <li><i class="fas fa-check"></i> Verb conjugations</li>
+                                <li><i class="fas fa-check"></i> Adjective forms</li>
+                                <li><i class="fas fa-check"></i> Sentence structure</li>
+                            </ul>
+                            <button class="test-btn" onclick="startSpecificQuiz('grammar-n5')">Take Test</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>Listening Test</h4>
+                            <span class="test-level">All Levels</span>
+                        </div>
+                        <div class="test-body">
+                            <div class="test-meta">
+                                <span><i class="far fa-clock"></i> 25 mins</span>
+                                <span><i class="fas fa-question-circle"></i> 20 questions</span>
+                                <span><i class="fas fa-trophy"></i> 65% pass</span>
+                            </div>
+                            <ul class="test-features">
+                                <li><i class="fas fa-check"></i> Native speaker audio</li>
+                                <li><i class="fas fa-check"></i> Daily conversations</li>
+                                <li><i class="fas fa-check"></i> News snippets</li>
+                                <li><i class="fas fa-check"></i> Multiple playback allowed</li>
+                            </ul>
+                            <button class="test-btn" onclick="alert('Please login to access listening tests')">Login Required</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>Full JLPT Mock</h4>
+                            <span class="test-level">N5-N2</span>
+                        </div>
+                        <div class="test-body">
+                            <div class="test-meta">
+                                <span><i class="far fa-clock"></i> 2 hours</span>
+                                <span><i class="fas fa-question-circle"></i> 100+ questions</span>
+                                <span><i class="fas fa-trophy"></i> Official format</span>
+                            </div>
+                            <ul class="test-features">
+                                <li><i class="fas fa-check"></i> Complete JLPT simulation</li>
+                                <li><i class="fas fa-check"></i> Vocabulary/Grammar sections</li>
+                                <li><i class="fas fa-check"></i> Reading comprehension</li>
+                                <li><i class="fas fa-check"></i> Listening section</li>
+                            </ul>
+                            <button class="test-btn" data-bs-toggle="modal" data-bs-target="#loginModal">Login to Access</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Types -->
+    <section class="assessment-types">
+        <div class="container">
+            <h2 class="section-title">Types of Assessments</h2>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in">
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <h4>Weekly Quizzes</h4>
+                        <p class="text-muted">Short 10-question quizzes to reinforce weekly learning</p>
+                        <span class="badge bg-danger">Every Friday</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4>Monthly Tests</h4>
+                        <p class="text-muted">Comprehensive tests covering all material from the month</p>
+                        <span class="badge bg-danger">Last Saturday</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <h4>Speaking Tests</h4>
+                        <p class="text-muted">1-on-1 oral assessment with sensei</p>
+                        <span class="badge bg-danger">By Appointment</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <h4>Writing Tasks</h4>
+                        <p class="text-muted">Kanji writing and composition assignments</p>
+                        <span class="badge bg-danger">Weekly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results & Analytics Preview -->
+    <section class="results-section">
+        <div class="container">
+            <h2 class="section-title">Performance Analytics</h2>
+            <p class="text-center mb-5">Track your progress with detailed analytics and reports</p>
+            
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="chart-container">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-left">
+                    <div class="score-card">
+                        <div class="score-number">85%</div>
+                        <div class="score-label">Average Score</div>
+                        <hr class="bg-white opacity-25 my-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="h3 mb-0">24</div>
+                                <small>Tests Taken</small>
+                            </div>
+                            <div class="col-6">
+                                <div class="h3 mb-0">18</div>
+                                <small>Passed</small>
+                            </div>
+                        </div>
+                        <hr class="bg-white opacity-25 my-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="h3 mb-0">92%</div>
+                                <small>Grammar</small>
+                            </div>
+                            <div class="col-6">
+                                <div class="h3 mb-0">78%</div>
+                                <small>Kanji</small>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 small opacity-75">*Based on student averages</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exam Schedule -->
+    <section class="exam-schedule">
+        <div class="container">
+            <h2 class="section-title">Upcoming Exam Schedule</h2>
+            <p class="text-center mb-5">Plan your preparation with our exam calendar</p>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="schedule-card">
+                        <div class="schedule-date">March 15, 2024</div>
+                        <h4 class="schedule-title">Beginner Level Test</h4>
+                        <p class="schedule-details">Hiragana, Katakana, Basic Grammar</p>
+                        <span class="schedule-badge">Registration Open</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="schedule-card">
+                        <div class="schedule-date">March 22, 2024</div>
+                        <h4 class="schedule-title">JLPT N5 Mock</h4>
+                        <p class="schedule-details">Full-length practice test</p>
+                        <span class="schedule-badge">Limited Seats</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="schedule-card">
+                        <div class="schedule-date">April 5, 2024</div>
+                        <h4 class="schedule-title">Intermediate Assessment</h4>
+                        <p class="schedule-details">Kanji, Grammar, Reading</p>
+                        <span class="schedule-badge">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Student Success Stories</h2>
+            <p class="text-center mb-5">See how our exam system helped students achieve their goals</p>
+            
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-up">
+                    <div class="testimonial-card">
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=1887&q=80" alt="Student" class="author-avatar">
+                            <div class="author-info">
+                                <h5>Farhana Ahmed</h5>
+                                <p>JLPT N5 Passed</p>
+                            </div>
+                        </div>
+                        <p class="mb-3">"The mock tests were incredibly helpful. I practiced with 6 full-length tests before the actual JLPT and passed on my first attempt!"</p>
+                        <span class="testimonial-score">Score: 142/180</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1887&q=80" alt="Student" class="author-avatar">
+                            <div class="author-info">
+                                <h5>Rakib Hasan</h5>
+                                <p>N4 Qualification</p>
+                            </div>
+                        </div>
+                        <p class="mb-3">"The weekly quizzes helped me stay on track. The detailed feedback on my weak areas in kanji really improved my score."</p>
+                        <span class="testimonial-score">Score: 135/180</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1964&q=80" alt="Student" class="author-avatar">
+                            <div class="author-info">
+                                <h5>Nusrat Jahan</h5>
+                                <p>N3 Certified</p>
+                            </div>
+                        </div>
+                        <p class="mb-3">"The analytics dashboard showed exactly where I needed more practice. The listening section mocks were especially useful."</p>
+                        <span class="testimonial-score">Score: 148/180</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Exam FAQs</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How are the exams graded?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Level 1 quizzes are auto-graded instantly with results shown immediately. Level 2 exams are a combination of auto-graded sections and teacher-reviewed portions (like writing and speaking). Detailed feedback is provided within 48 hours.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    What is the passing score?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    For weekly quizzes, 80% is considered passing. For monthly tests and JLPT mocks, we follow the official JLPT passing criteria which varies by level but typically requires around 60-70% overall with no section scoring below 30%.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Can I retake exams?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! You can retake Level 1 quizzes unlimited times for practice. Level 2 exams can be retaken once per month. Mock tests can be taken as many times as needed with different question sets each time.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Do you provide JLPT registration assistance?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, we guide students through the JLPT registration process, provide information about test centers in Bangladesh, and help with form filling. We also organize group registrations for our students.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    How can I access my exam history?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Once you log in to your student dashboard, you'll find a complete history of all your exams, scores, and teacher feedback. You can track your progress over time and identify areas for improvement.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2>Ready to Test Your Japanese Skills?</h2>
+            <p>Join now and get access to our complete exam system</p>
+            <a href="index.html#enroll" class="btn btn-light">Enroll Now</a>
+            <button class="btn btn-outline" onclick="scrollToQuiz()">Try Sample Quiz</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-logo">Nihongo<span>Master</span></div>
+                    <p>Learn authentic Japanese language and culture from experienced instructors in the comfort of your home.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <a href="index.html" class="footer-link">Home</a>
+                    <a href="index.html#about" class="footer-link">About Sensei</a>
+                    <a href="courses.html" class="footer-link">Courses</a>
+                    <a href="class-system.html" class="footer-link">Class System</a>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Resources</h5>
+                    <a href="exams.html" class="footer-link">Exams</a>
+                    <a href="index.html#why-us" class="footer-link">Why Choose Us</a>
+                    <a href="index.html#enroll" class="footer-link">Enrollment</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@nihongomaster.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +880 1XXX-XXXXXX</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Dhaka, Bangladesh</p>
+                    <p class="mt-3">© 2023 Nihongo Master. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal (Same as index.html) -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login as <span id="selectedRole">Student</span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-decoration-none">Forgot Password?</a>
+                        </div>
+                    </form>
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6 class="mb-2">Demo Credentials:</h6>
+                        <div class="small">
+                            <p class="mb-1"><strong>Student:</strong> student@example.com / student123</p>
+                            <p class="mb-1"><strong>Teacher:</strong> teacher@example.com / teacher123</p>
+                            <p class="mb-0"><strong>Admin:</strong> admin@example.com / admin123</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="mb-0">Don't have an account? <a href="#" data-bs-toggle="modal"
+                            data-bs-target="#signupModal" data-bs-dismiss="modal">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal (Same as index.html) -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Create New Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="signupPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupRole" class="form-label">I want to join as</label>
+                            <select class="form-select" id="signupRole" required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="signupPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="signupPassword" required>
+                                <small class="text-muted">Minimum 8 characters</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                            </div>
+                        </div>
+                        <div id="studentFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Student Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="studentLevel" class="form-label">Current Japanese Level</label>
+                                    <select class="form-select" id="studentLevel">
+                                        <option value="beginner">Beginner (No experience)</option>
+                                        <option value="beginner2">Beginner (Some Hiragana/Katakana)</option>
+                                        <option value="intermediate">Intermediate (Basic conversation)</option>
+                                        <option value="advanced">Advanced (JLPT N3 or above)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="studentCourse" class="form-label">Interested Course</label>
+                                    <select class="form-select" id="studentCourse">
+                                        <option value="beginner">Beginner Japanese</option>
+                                        <option value="intermediate">Intermediate Japanese</option>
+                                        <option value="advanced">Conversational Mastery</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="teacherFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Teacher Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="teacherQualification" class="form-label">Qualification</label>
+                                    <input type="text" class="form-control" id="teacherQualification"
+                                        placeholder="e.g., JLPT N1, Teaching Experience">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="teacherSpecialization" class="form-label">Specialization</label>
+                                    <select class="form-select" id="teacherSpecialization">
+                                        <option value="beginner">Beginner Level</option>
+                                        <option value="intermediate">Intermediate Level</option>
+                                        <option value="advanced">Advanced Level</option>
+                                        <option value="jlpt">JLPT Preparation</option>
+                                        <option value="conversation">Conversation Practice</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teacherBio" class="form-label">Short Bio</label>
+                                <textarea class="form-control" id="teacherBio" rows="2"
+                                    placeholder="Tell us about your teaching experience..."></textarea>
+                            </div>
+                        </div>
+                        <div id="adminFields" style="display: none;">
+                            <h6 class="mt-3 mb-2">Admin Information</h6>
+                            <div class="mb-3">
+                                <label for="adminDepartment" class="form-label">Department</label>
+                                <input type="text" class="form-control" id="adminDepartment" value="Administration"
+                                    readonly>
+                                <small class="text-muted">Admin accounts require approval from super admin</small>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
+                            <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms of
+                                    Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p class="mb-0">Already have an account? <a href="#" data-bs-toggle="modal"
+                            data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Quiz Data
+        const quizQuestions = [
+            {
+                question: "What is the Japanese word for 'hello'?",
+                options: [
+                    "さようなら (Sayōnara)",
+                    "こんにちは (Konnichiwa)",
+                    "ありがとう (Arigatō)",
+                    "おはよう (Ohayō)"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which of these is NOT a Japanese writing system?",
+                options: [
+                    "Hiragana",
+                    "Katakana",
+                    "Kanji",
+                    "Hangul"
+                ],
+                correct: 3
+            },
+            {
+                question: "What does 'ありがとう' mean in English?",
+                options: [
+                    "Hello",
+                    "Goodbye",
+                    "Thank you",
+                    "Excuse me"
+                ],
+                correct: 2
+            },
+            {
+                question: "How do you say 'I' in Japanese?",
+                options: [
+                    "あなた (Anata)",
+                    "彼 (Kare)",
+                    "私 (Watashi)",
+                    "彼女 (Kanojo)"
+                ],
+                correct: 2
+            },
+            {
+                question: "What is the Japanese word for 'book'?",
+                options: [
+                    "本 (Hon)",
+                    "紙 (Kami)",
+                    "鉛筆 (Enpitsu)",
+                    "机 (Tsukue)"
+                ],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizTimer;
+        let timeLeft = 300; // 5 minutes in seconds
+        let quizActive = false;
+
+        $(document).ready(function () {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+
+            // Initialize Chart
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                    datasets: [{
+                        label: 'Your Progress',
+                        data: [65, 70, 75, 82, 88, 92],
+                        borderColor: '#E63946',
+                        backgroundColor: 'rgba(230, 57, 70, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Class Average',
+                        data: [60, 65, 70, 75, 80, 85],
+                        borderColor: '#FFD166',
+                        backgroundColor: 'rgba(255, 209, 102, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: '6-Month Progress Tracking'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score %'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Custom Cursor
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-border');
+
+            document.addEventListener('mousemove', function (e) {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            });
+
+            // Add hover effect to interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .level-card, .jlpt-card, .test-card, .quiz-option, .social-icon');
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursorOutline.style.width = '60px';
+                    cursorOutline.style.height = '60px';
+                    cursorOutline.style.borderColor = '#FFD166';
+                });
+
+                element.addEventListener('mouseleave', () => {
+                    cursorOutline.style.width = '40px';
+                    cursorOutline.style.height = '40px';
+                    cursorOutline.style.borderColor = '#FFD166';
+                });
+            });
+
+            // Scroll Progress Bar
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                document.querySelector('.scroll-progress').style.width = scrollPercentage + '%';
+            });
+
+            // Scroll to Top Button
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('active');
+                } else {
+                    scrollToTopBtn.classList.remove('active');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Initialize Quiz
+            loadQuestion();
+
+            // Quiz navigation
+            $('#nextBtn').click(function () {
+                if (currentQuestion < quizQuestions.length - 1) {
+                    currentQuestion++;
+                    loadQuestion();
+                } else {
+                    finishQuiz();
+                }
+            });
+
+            $('#prevBtn').click(function () {
+                if (currentQuestion > 0) {
+                    currentQuestion--;
+                    loadQuestion();
+                }
+            });
+
+            // Option selection
+            $(document).on('click', '.quiz-option', function () {
+                if (!quizActive) return;
+                
+                $('.quiz-option').removeClass('selected');
+                $(this).addClass('selected');
+                userAnswers[currentQuestion] = $(this).index();
+                $('#nextBtn').prop('disabled', false);
+            });
+
+            // Retry quiz
+            $('#retryQuizBtn').click(function () {
+                resetQuiz();
+                startQuiz();
+            });
+
+            $('#newQuizBtn').click(function () {
+                resetQuiz();
+                $('#quizResults').hide();
+                $('#quizContent').show();
+                loadQuestion();
+            });
+
+            // Navbar scroll effect
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').addClass('navbar-scrolled');
+                } else {
+                    $('.navbar').removeClass('navbar-scrolled');
+                }
+            });
+
+            // Login Modal Role Selection
+            $('[data-bs-target="#loginModal"][data-role]').click(function () {
+                const role = $(this).data('role');
+                $('#selectedRole').text(role.charAt(0).toUpperCase() + role.slice(1));
+            });
+
+            // Signup role selection
+            $('#signupRole').change(function () {
+                const selectedRole = $(this).val();
+                $('#studentFields, #teacherFields, #adminFields').hide();
+                
+                if (selectedRole === 'student') {
+                    $('#studentFields').slideDown();
+                } else if (selectedRole === 'teacher') {
+                    $('#teacherFields').slideDown();
+                } else if (selectedRole === 'admin') {
+                    $('#adminFields').slideDown();
+                }
+            });
+
+            // Login form submission
+            $('#loginForm').submit(function (e) {
+                e.preventDefault();
+                const email = $('#loginEmail').val();
+                const password = $('#loginPassword').val();
+                const role = $('#selectedRole').text().toLowerCase();
+
+                let isValid = false;
+                if (role === 'student' && email === 'student@example.com' && password === 'student123') {
+                    isValid = true;
+                } else if (role === 'teacher' && email === 'teacher@example.com' && password === 'teacher123') {
+                    isValid = true;
+                } else if (role === 'admin' && email === 'admin@example.com' && password === 'admin123') {
+                    isValid = true;
+                }
+
+                if (isValid) {
+                    alert(`Login successful! Welcome ${role}.`);
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    if (modal) modal.hide();
+                    
+                    // Update navbar
+                    updateNavbarForLoggedIn(role, email);
+                } else {
+                    alert('Invalid credentials. Please check the demo credentials below.');
+                }
+            });
+
+            // Signup form submission
+            $('#signupForm').submit(function (e) {
+                e.preventDefault();
+                const password = $('#signupPassword').val();
+                const confirmPassword = $('#confirmPassword').val();
+
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long.');
+                    return;
+                }
+
+                alert('Account created successfully! Welcome to Nihongo Master.');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+                if (modal) modal.hide();
+                this.reset();
+                $('#studentFields, #teacherFields, #adminFields').hide();
+            });
+        });
+
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestion];
+            $('#questionText').text(question.question);
+            $('#questionCounter').text(`Question ${currentQuestion + 1} of ${quizQuestions.length}`);
+            
+            let optionsHtml = '';
+            question.options.forEach((option, index) => {
+                const selectedClass = userAnswers[currentQuestion] === index ? 'selected' : '';
+                optionsHtml += `<div class="quiz-option ${selectedClass}">${String.fromCharCode(65 + index)}) ${option}</div>`;
+            });
+            $('#quizOptions').html(optionsHtml);
+            
+            $('#prevBtn').prop('disabled', currentQuestion === 0);
+            $('#nextBtn').prop('disabled', userAnswers[currentQuestion] === undefined);
+            
+            if (currentQuestion === quizQuestions.length - 1) {
+                $('#nextBtn').text('Finish');
+            } else {
+                $('#nextBtn').text('Next');
+            }
+            
+            startTimer();
+        }
+
+        function startTimer() {
+            if (!quizActive) {
+                quizActive = true;
+                quizTimer = setInterval(function () {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(quizTimer);
+                        finishQuiz();
+                    }
+                }, 1000);
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            $('#quizTimer').text(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+        }
+
+        function finishQuiz() {
+            clearInterval(quizTimer);
+            quizActive = false;
+            
+            let correct = 0;
+            for (let i = 0; i < quizQuestions.length; i++) {
+                if (userAnswers[i] === quizQuestions[i].correct) {
+                    correct++;
+                }
+            }
+            
+            const total = quizQuestions.length;
+            const percentage = (correct / total) * 100;
+            
+            $('#finalScore').text(`${correct}/${total}`);
+            $('#correctCount').text(correct);
+            $('#incorrectCount').text(total - correct);
+            $('#correctBar').css('width', `${percentage}%`);
+            $('#incorrectBar').css('width', `${100 - percentage}%`);
+            
+            let message = '';
+            let tip = '';
+            
+            if (percentage >= 80) {
+                message = 'Excellent! You have strong Japanese basics!';
+                tip = 'You\'re ready to move to intermediate level! Consider enrolling in our Intermediate course.';
+            } else if (percentage >= 60) {
+                message = 'Good job! Keep practicing to improve.';
+                tip = 'Focus on reviewing the questions you got wrong. Practice with more quizzes to strengthen your knowledge.';
+            } else {
+                message = 'Keep learning! Practice makes perfect.';
+                tip = 'Don\'t worry! Review the basics and try again. Our Beginner course will help you build a strong foundation.';
+            }
+            
+            $('#resultMessage').text(message);
+            $('#teacherTip').text(tip);
+            
+            $('#quizContent').hide();
+            $('#quizResults').show();
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            timeLeft = 300;
+            quizActive = false;
+            clearInterval(quizTimer);
+            $('#quizTimer').text('05:00');
+        }
+
+        function scrollToQuiz() {
+            $('html, body').animate({
+                scrollTop: $('#sample-quiz').offset().top - 80
+            }, 800);
+            resetQuiz();
+            $('#quizContent').show();
+            $('#quizResults').hide();
+            loadQuestion();
+        }
+
+        function startSpecificQuiz(type) {
+            alert(`Starting ${type} quiz! This feature is available for logged-in users.`);
+        }
+
+        function updateNavbarForLoggedIn(role, email) {
+            const navbarNav = document.querySelector('#navbarNav .navbar-nav.ms-auto');
+            if (!navbarNav) return;
+
+            const loginDropdown = document.querySelector('.nav-item.dropdown');
+            if (loginDropdown) {
+                loginDropdown.remove();
+            }
+
+            const userMenu = document.createElement('li');
+            userMenu.className = 'nav-item dropdown';
+            userMenu.innerHTML = `
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-circle"></i> ${role.charAt(0).toUpperCase() + role.slice(1)}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><h6 class="dropdown-header">${email}</h6></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                </ul>
+            `;
+
+            navbarNav.appendChild(userMenu);
+
+            document.getElementById('logoutBtn').addEventListener('click', function (e) {
+                e.preventDefault();
+                location.reload();
+            });
+        }
+    </script>
+</body>
+
+</html>

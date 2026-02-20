@@ -328,3 +328,174 @@ $(document).ready(function () {
     // Initialize with scroll check
     $(window).trigger('scroll');
 });
+
+// Login Modal Role Selection
+document.addEventListener('DOMContentLoaded', function () {
+    // Set role in login modal when clicked
+    const loginLinks = document.querySelectorAll('[data-bs-target="#loginModal"][data-role]');
+    loginLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            const role = this.getAttribute('data-role');
+            const roleSpan = document.getElementById('selectedRole');
+            if (roleSpan) {
+                roleSpan.textContent = role.charAt(0).toUpperCase() + role.slice(1);
+            }
+        });
+    });
+
+    // Show/hide fields based on selected role in signup
+    const roleSelect = document.getElementById('signupRole');
+    if (roleSelect) {
+        roleSelect.addEventListener('change', function () {
+            const studentFields = document.getElementById('studentFields');
+            const teacherFields = document.getElementById('teacherFields');
+            const adminFields = document.getElementById('adminFields');
+
+            // Hide all fields first
+            if (studentFields) studentFields.style.display = 'none';
+            if (teacherFields) teacherFields.style.display = 'none';
+            if (adminFields) adminFields.style.display = 'none';
+
+            // Show fields based on selected role
+            const selectedRole = this.value;
+            if (selectedRole === 'student' && studentFields) {
+                studentFields.style.display = 'block';
+            } else if (selectedRole === 'teacher' && teacherFields) {
+                teacherFields.style.display = 'block';
+            } else if (selectedRole === 'admin' && adminFields) {
+                adminFields.style.display = 'block';
+            }
+        });
+    }
+
+    // Login form submission
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const role = document.getElementById('selectedRole').textContent.toLowerCase();
+
+            // Simple validation (in real app, this would be an API call)
+            if (email && password) {
+                // Demo authentication
+                let isValid = false;
+                if (role === 'student' && email === 'student@example.com' && password === 'student123') {
+                    isValid = true;
+                } else if (role === 'teacher' && email === 'teacher@example.com' && password === 'teacher123') {
+                    isValid = true;
+                } else if (role === 'admin' && email === 'admin@example.com' && password === 'admin123') {
+                    isValid = true;
+                }
+
+                if (isValid) {
+                    alert(`Login successful! Welcome ${role}.`);
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    if (modal) modal.hide();
+
+                    // Update navbar to show logged in state
+                    updateNavbarForLoggedIn(role, email);
+                } else {
+                    alert('Invalid credentials. Please check the demo credentials below.');
+                }
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+    }
+
+    // Signup form submission
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Basic validation
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                return;
+            }
+
+            // Get form data
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const role = document.getElementById('signupRole').value;
+
+            // In real app, this would be an API call
+            alert(`Account created successfully! Welcome ${firstName} ${lastName}. Please check your email for verification.`);
+
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+            if (modal) modal.hide();
+
+            // Reset form
+            this.reset();
+
+            // Hide all role-specific fields
+            document.getElementById('studentFields').style.display = 'none';
+            document.getElementById('teacherFields').style.display = 'none';
+            document.getElementById('adminFields').style.display = 'none';
+        });
+    }
+
+    // Function to update navbar for logged in user
+    function updateNavbarForLoggedIn(role, email) {
+        const navbarNav = document.querySelector('#navbarNav .navbar-nav.ms-auto');
+        if (!navbarNav) return;
+
+        // Find and remove login dropdown
+        const loginDropdown = document.querySelector('.nav-item.dropdown');
+        if (loginDropdown) {
+            loginDropdown.remove();
+        }
+
+        // Add user menu
+        const userMenu = document.createElement('li');
+        userMenu.className = 'nav-item dropdown';
+        userMenu.innerHTML = `
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle"></i> ${role.charAt(0).toUpperCase() + role.slice(1)}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><h6 class="dropdown-header">${email}</h6></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                ${role === 'student' ? '<li><a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i>My Courses</a></li>' : ''}
+                ${role === 'teacher' ? '<li><a class="dropdown-item" href="#"><i class="fas fa-users me-2"></i>My Students</a></li>' : ''}
+                ${role === 'admin' ? '<li><a class="dropdown-item" href="#"><i class="fas fa-school me-2"></i>Admin Panel</a></li>' : ''}
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+        `;
+
+        navbarNav.appendChild(userMenu);
+
+        // Add logout handler
+        document.getElementById('logoutBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+            location.reload(); // Simple reload to reset state
+        });
+    }
+
+    // Handle forgot password link
+    const forgotPasswordLinks = document.querySelectorAll('a[href="#"]:contains("Forgot Password")');
+    forgotPasswordLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            alert('Password reset link will be sent to your email. (Demo functionality)');
+        });
+    });
+});
