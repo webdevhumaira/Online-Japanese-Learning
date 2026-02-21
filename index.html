@@ -48,7 +48,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
+                        <a class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="sensei.html">About Sensei</a>
@@ -98,119 +98,174 @@
 
     <!-- Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Login as <span id="selectedRole">Student</span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                        <div class="text-center mt-3">
-                            <a href="#" class="text-decoration-none">Forgot Password?</a>
-                        </div>
-                    </form>
-
-                    <!-- Role-specific demo credentials -->
-                    <div class="mt-4 p-3 bg-light rounded">
-                        <h6 class="mb-2">Demo Credentials:</h6>
-                        <div class="small">
-                            <p class="mb-1"><strong>Student:</strong> student@example.com / student123</p>
-                            <p class="mb-1"><strong>Teacher:</strong> teacher@example.com / teacher123</p>
-                            <p class="mb-0"><strong>Admin:</strong> admin@example.com / admin123</p>
-                        </div>
+        <div class="modal-dialog modal-dialog-centered auth-modal-dialog">
+            <div class="modal-content auth-modal-content">
+                <button type="button" class="auth-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <!-- Left Decorative Panel -->
+                <div class="auth-panel-left" id="loginPanelLeft">
+                    <div class="auth-panel-kanji">日</div>
+                    <div class="auth-panel-sakura">🌸</div>
+                    <div class="auth-role-icon" id="loginRoleIcon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="auth-panel-title">Welcome Back!</h3>
+                    <p class="auth-panel-subtitle">Login as</p>
+                    <div class="auth-role-badge" id="loginRoleBadge">Student</div>
+                    <div class="auth-panel-dots">
+                        <span></span><span></span><span></span>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <p class="mb-0">Don't have an account? <a href="#" data-bs-toggle="modal"
-                            data-bs-target="#signupModal" data-bs-dismiss="modal">Sign up</a></p>
+                <!-- Right Form Panel -->
+                <div class="auth-panel-right">
+                    <div class="auth-form-header">
+                        <h4>Sign In</h4>
+                        <p>Enter your credentials to continue</p>
+                    </div>
+                    <form id="loginForm">
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="auth-input" id="loginEmail" placeholder="Email Address" required>
+                        </div>
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="auth-input" id="loginPassword" placeholder="Password" required>
+                            <span class="auth-input-toggle" onclick="togglePassword('loginPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                        <div class="auth-remember-row">
+                            <label class="auth-checkbox-label">
+                                <input type="checkbox" id="rememberMe">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="auth-forgot-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="auth-submit-btn">
+                            <span>Login</span> <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+                    <!-- Demo Credentials -->
+                    <div class="auth-demo-box">
+                        <div class="auth-demo-title"><i class="fas fa-info-circle me-1"></i> Demo Credentials</div>
+                        <div class="auth-demo-item"><span class="auth-demo-role student">Student</span> student@example.com / student123</div>
+                        <div class="auth-demo-item"><span class="auth-demo-role teacher">Teacher</span> teacher@example.com / teacher123</div>
+                        <div class="auth-demo-item"><span class="auth-demo-role admin">Admin</span> admin@example.com / admin123</div>
+                    </div>
+                    <div class="auth-switch-text">
+                        Don't have an account?
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign Up</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Hidden role tracker for JS compatibility -->
+    <span id="selectedRole" style="display:none">Student</span>
+
     <!-- Signup Modal -->
     <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="signupModalLabel">Create New Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-dialog-centered auth-modal-dialog auth-modal-dialog-lg">
+            <div class="modal-content auth-modal-content">
+                <button type="button" class="auth-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <!-- Left Decorative Panel -->
+                <div class="auth-panel-left signup-panel">
+                    <div class="auth-panel-kanji">語</div>
+                    <div class="auth-panel-sakura">🌸</div>
+                    <div class="auth-role-icon signup-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="auth-panel-title">Join Us!</h3>
+                    <p class="auth-panel-subtitle">Start your Japanese journey today</p>
+                    <div class="auth-panel-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="auth-side-features">
+                        <div class="auth-side-feature"><i class="fas fa-check-circle"></i> Free Trial Class</div>
+                        <div class="auth-side-feature"><i class="fas fa-check-circle"></i> Expert Instructors</div>
+                        <div class="auth-side-feature"><i class="fas fa-check-circle"></i> Certificate Awarded</div>
+                    </div>
                 </div>
-                <div class="modal-body">
+                <!-- Right Form Panel -->
+                <div class="auth-panel-right auth-panel-right-scroll">
+                    <div class="auth-form-header">
+                        <h4>Create Account</h4>
+                        <p>Fill in your details to get started</p>
+                    </div>
                     <form id="signupForm">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="firstName" required>
+                        <!-- Role Tabs -->
+                        <div class="auth-role-tabs">
+                            <button type="button" class="auth-role-tab active" data-role="student">
+                                <i class="fas fa-graduation-cap"></i> Student
+                            </button>
+                            <button type="button" class="auth-role-tab" data-role="teacher">
+                                <i class="fas fa-chalkboard-teacher"></i> Teacher
+                            </button>
+                            <button type="button" class="auth-role-tab" data-role="admin">
+                                <i class="fas fa-user-shield"></i> Admin
+                            </button>
+                        </div>
+                        <select class="d-none" id="signupRole" required>
+                            <option value="student" selected>Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Admin</option>
+                        </select>
+
+                        <div class="row g-2 mb-0">
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="auth-input" id="firstName" placeholder="First Name" required>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="signupEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="signupEmail" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="signupPhone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="signupPhone" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="signupRole" class="form-label">I want to join as</label>
-                            <select class="form-select" id="signupRole" required>
-                                <option value="" disabled selected>Select your role</option>
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="signupPassword" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="signupPassword" required>
-                                <small class="text-muted">Minimum 8 characters</small>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" required>
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="auth-input" id="lastName" placeholder="Last Name" required>
+                                </div>
                             </div>
                         </div>
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="auth-input" id="signupEmail" placeholder="Email Address" required>
+                        </div>
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-phone"></i></span>
+                            <input type="tel" class="auth-input" id="signupPhone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="row g-2 mb-0">
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="auth-input" id="signupPassword" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="auth-input" id="confirmPassword" placeholder="Confirm Password" required>
+                                </div>
+                            </div>
+                        </div>
 
-                        <!-- Student-specific fields (hidden by default) -->
-                        <div id="studentFields" style="display: none;">
-                            <h6 class="mt-3 mb-2">Student Information</h6>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="studentLevel" class="form-label">Current Japanese Level</label>
-                                    <select class="form-select" id="studentLevel">
+                        <!-- Student-specific fields -->
+                        <div id="studentFields" class="auth-role-fields">
+                            <div class="auth-role-fields-label"><i class="fas fa-graduation-cap me-1"></i> Student Details</div>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <select class="auth-select" id="studentLevel">
                                         <option value="beginner">Beginner (No experience)</option>
-                                        <option value="beginner2">Beginner (Some Hiragana/Katakana)</option>
-                                        <option value="intermediate">Intermediate (Basic conversation)</option>
-                                        <option value="advanced">Advanced (JLPT N3 or above)</option>
+                                        <option value="beginner2">Some Hiragana/Katakana</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced (JLPT N3+)</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="studentCourse" class="form-label">Interested Course</label>
-                                    <select class="form-select" id="studentCourse">
+                                <div class="col-6">
+                                    <select class="auth-select" id="studentCourse">
                                         <option value="beginner">Beginner Japanese</option>
                                         <option value="intermediate">Intermediate Japanese</option>
                                         <option value="advanced">Conversational Mastery</option>
@@ -219,56 +274,53 @@
                             </div>
                         </div>
 
-                        <!-- Teacher-specific fields (hidden by default) -->
-                        <div id="teacherFields" style="display: none;">
-                            <h6 class="mt-3 mb-2">Teacher Information</h6>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="teacherQualification" class="form-label">Qualification</label>
-                                    <input type="text" class="form-control" id="teacherQualification"
-                                        placeholder="e.g., JLPT N1, Teaching Experience">
+                        <!-- Teacher-specific fields -->
+                        <div id="teacherFields" class="auth-role-fields" style="display:none">
+                            <div class="auth-role-fields-label"><i class="fas fa-chalkboard-teacher me-1"></i> Teacher Details</div>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="auth-input-group mb-0">
+                                        <span class="auth-input-icon"><i class="fas fa-certificate"></i></span>
+                                        <input type="text" class="auth-input" id="teacherQualification" placeholder="Qualification (e.g. JLPT N1)">
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="teacherSpecialization" class="form-label">Specialization</label>
-                                    <select class="form-select" id="teacherSpecialization">
+                                <div class="col-6">
+                                    <select class="auth-select" id="teacherSpecialization">
                                         <option value="beginner">Beginner Level</option>
-                                        <option value="intermediate">Intermediate Level</option>
-                                        <option value="advanced">Advanced Level</option>
-                                        <option value="jlpt">JLPT Preparation</option>
-                                        <option value="conversation">Conversation Practice</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                        <option value="jlpt">JLPT Prep</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="teacherBio" class="form-label">Short Bio</label>
-                                <textarea class="form-control" id="teacherBio" rows="2"
-                                    placeholder="Tell us about your teaching experience..."></textarea>
+                            <div class="auth-input-group mt-2">
+                                <span class="auth-input-icon" style="top:12px"><i class="fas fa-pen"></i></span>
+                                <textarea class="auth-input" id="teacherBio" rows="2" placeholder="Short bio about your teaching experience..."></textarea>
                             </div>
                         </div>
 
-                        <!-- Admin-specific fields (hidden by default) -->
-                        <div id="adminFields" style="display: none;">
-                            <h6 class="mt-3 mb-2">Admin Information</h6>
-                            <div class="mb-3">
-                                <label for="adminDepartment" class="form-label">Department</label>
-                                <input type="text" class="form-control" id="adminDepartment" value="Administration"
-                                    readonly>
-                                <small class="text-muted">Admin accounts require approval from super admin</small>
+                        <!-- Admin-specific fields -->
+                        <div id="adminFields" class="auth-role-fields" style="display:none">
+                            <div class="auth-role-fields-label"><i class="fas fa-user-shield me-1"></i> Admin Details</div>
+                            <div class="auth-input-group">
+                                <span class="auth-input-icon"><i class="fas fa-building"></i></span>
+                                <input type="text" class="auth-input" id="adminDepartment" value="Administration" readonly>
                             </div>
+                            <small class="text-muted d-block mt-1 mb-2">Admin accounts require approval from super admin</small>
                         </div>
 
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
-                            <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms of
-                                    Service</a> and <a href="#">Privacy Policy</a></label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                        <label class="auth-checkbox-label mt-2">
+                            <input type="checkbox" id="termsAgree" required>
+                            <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                        </label>
+                        <button type="submit" class="auth-submit-btn mt-2">
+                            <span>Create Account</span> <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <p class="mb-0">Already have an account? <a href="#" data-bs-toggle="modal"
-                            data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a></p>
+                    <div class="auth-switch-text">
+                        Already have an account?
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -288,7 +340,7 @@
                         <h1 class="hero-headline">Learn Japanese from Home with Expert Guidance</h1>
                         <p class="hero-subheadline">Beginner to Conversational Japanese in just 6 months</p>
                         <div class="hero-cta">
-                            <a href="#enroll" class="cta-button">🔴 Enroll Now / Free Trial Class</a>
+                            <a href="#enroll" class="cta-button"><i class="fa-solid fa-campground"></i>  Enroll Now </a>
                             <a href="#courses" class="cta-button cta-button-outline">View Courses</a>
                         </div>
                     </div>
@@ -931,20 +983,327 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <h5 class="mb-3">Contact Info</h5>
-                    <p><i class="fas fa-envelope me-2"></i> info@nihongomaster.com</p>
+                    <p><i class="fas fa-envelope me-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e980878f86a987808186878e8684889a9d8c9bc78a8684">[email&#160;protected]</a></p>
                     <p><i class="fas fa-phone me-2"></i> +880 1XXX-XXXXXX</p>
-                    <p><i class="fas fa-map-marker-alt me-2"></i> Dhaka, Bangladesh</p>
-                    <p class="mt-3">© 2023 Nihongo Master. All rights reserved.</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Online Classes, Bangladesh</p>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <p class="mb-0">&copy; 2024 NihongoMaster. All Rights Reserved.</p>
+                <div class="mt-3 mt-md-0">
+                    <a href="#" class="footer-link d-inline me-3">Privacy Policy</a>
+                    <a href="#" class="footer-link d-inline">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap & jQuery Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- DASHBOARD OVERLAY -->
+    <div id="dashboardOverlay" class="dashboard-overlay" style="display:none;">
+        <!-- Student Dashboard -->
+        <div id="studentDashboard" class="dashboard-wrapper" style="display:none;">
+            <nav class="dashboard-navbar">
+                <div class="dashboard-brand">Nihongo<span>Master</span> <span class="dashboard-role-badge student-badge">Student Portal</span></div>
+                <div class="dashboard-nav-right">
+                    <div class="dashboard-avatar" id="studentAvatar">S</div>
+                    <span id="studentName">Student</span>
+                    <button class="dashboard-logout-btn" id="studentLogout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </nav>
+            <div class="dashboard-body">
+                <div class="dashboard-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="#" class="sidebar-item active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-book-open"></i> My Courses</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-calendar"></i> Schedule</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-tasks"></i> Assignments</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-chart-line"></i> Progress</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-file-pdf"></i> Study Materials</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-certificate"></i> Certificate</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-user"></i> Profile</a>
+                    </div>
+                </div>
+                <div class="dashboard-main">
+                    <div class="dashboard-welcome">
+                        <div>
+                            <h2>こんにちは (Konnichiwa)! 👋</h2>
+                            <p>Welcome back to your learning journey!</p>
+                        </div>
+                        <div class="dashboard-kanji-deco">日</div>
+                    </div>
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#E63946;">
+                                <div class="dash-stat-icon"><i class="fas fa-book"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">2</div>
+                                    <div class="dash-stat-label">Enrolled Courses</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#FFD166;">
+                                <div class="dash-stat-icon"><i class="fas fa-star"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">67%</div>
+                                    <div class="dash-stat-label">Avg. Progress</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#06D6A0;">
+                                <div class="dash-stat-icon"><i class="fas fa-check-double"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">12</div>
+                                    <div class="dash-stat-label">Lessons Done</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#118AB2;">
+                                <div class="dash-stat-icon"><i class="fas fa-fire"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">7</div>
+                                    <div class="dash-stat-label">Day Streak 🔥</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-7">
+                            <div class="dash-card">
+                                <div class="dash-card-header"><i class="fas fa-graduation-cap me-2"></i>My Courses</div>
+                                <div class="dash-course-item">
+                                    <div class="dash-course-icon">🇯🇵</div>
+                                    <div class="dash-course-info">
+                                        <div class="dash-course-title">Beginner Japanese</div>
+                                        <div class="progress" style="height:6px;">
+                                            <div class="progress-bar bg-danger" style="width:70%"></div>
+                                        </div>
+                                        <small>70% Complete &bull; Next: Lesson 15</small>
+                                    </div>
+                                </div>
+                                <div class="dash-course-item">
+                                    <div class="dash-course-icon">📖</div>
+                                    <div class="dash-course-info">
+                                        <div class="dash-course-title">Kanji Fundamentals</div>
+                                        <div class="progress" style="height:6px;">
+                                            <div class="progress-bar bg-warning" style="width:45%"></div>
+                                        </div>
+                                        <small>45% Complete &bull; Next: Lesson 7</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="dash-card">
+                                <div class="dash-card-header"><i class="fas fa-calendar-alt me-2"></i>Upcoming Classes</div>
+                                <div class="dash-schedule-item"><span class="dash-time">Mon 9:00 AM</span><span>Beginner Japanese</span></div>
+                                <div class="dash-schedule-item"><span class="dash-time">Wed 9:00 AM</span><span>Kanji Practice</span></div>
+                                <div class="dash-schedule-item"><span class="dash-time">Fri 9:00 AM</span><span>Conversation Class</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Dashboard -->
+        <div id="teacherDashboard" class="dashboard-wrapper" style="display:none;">
+            <nav class="dashboard-navbar teacher-navbar">
+                <div class="dashboard-brand">Nihongo<span>Master</span> <span class="dashboard-role-badge teacher-badge">Teacher Portal</span></div>
+                <div class="dashboard-nav-right">
+                    <div class="dashboard-avatar teacher-av" id="teacherAvatar">T</div>
+                    <span id="teacherName">Teacher</span>
+                    <button class="dashboard-logout-btn" id="teacherLogout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </nav>
+            <div class="dashboard-body">
+                <div class="dashboard-sidebar teacher-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="#" class="sidebar-item active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-users"></i> My Students</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-chalkboard"></i> Classes</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-calendar"></i> Schedule</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-file-alt"></i> Assignments</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-chart-bar"></i> Reports</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-upload"></i> Upload Materials</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-user"></i> Profile</a>
+                    </div>
+                </div>
+                <div class="dashboard-main">
+                    <div class="dashboard-welcome teacher-welcome">
+                        <div>
+                            <h2>ようこそ (Yōkoso)! 🎌</h2>
+                            <p>Manage your classes and students</p>
+                        </div>
+                        <div class="dashboard-kanji-deco">先</div>
+                    </div>
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#2D6A4F;">
+                                <div class="dash-stat-icon"><i class="fas fa-users"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">28</div>
+                                    <div class="dash-stat-label">Total Students</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#F77F00;">
+                                <div class="dash-stat-icon"><i class="fas fa-chalkboard"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">3</div>
+                                    <div class="dash-stat-label">Active Classes</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#7209B7;">
+                                <div class="dash-stat-icon"><i class="fas fa-star"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">4.8</div>
+                                    <div class="dash-stat-label">Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#3A86FF;">
+                                <div class="dash-stat-icon"><i class="fas fa-video"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">5</div>
+                                    <div class="dash-stat-label">Classes This Week</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-7">
+                            <div class="dash-card">
+                                <div class="dash-card-header"><i class="fas fa-users me-2"></i>Recent Students</div>
+                                <div class="dash-student-item"><div class="dash-student-av" style="background:#E63946">A</div><div><div class="fw-bold">Aisha Khan</div><small>Beginner Japanese</small></div><span class="dash-badge-active">Active</span></div>
+                                <div class="dash-student-item"><div class="dash-student-av" style="background:#118AB2">R</div><div><div class="fw-bold">Rahim Hossain</div><small>Intermediate</small></div><span class="dash-badge-active">Active</span></div>
+                                <div class="dash-student-item"><div class="dash-student-av" style="background:#06D6A0">S</div><div><div class="fw-bold">Sara Ahmed</div><small>Kanji Fundamentals</small></div><span class="dash-badge-pending">Pending</span></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="dash-card">
+                                <div class="dash-card-header"><i class="fas fa-calendar me-2"></i>Today's Classes</div>
+                                <div class="dash-schedule-item"><span class="dash-time">9:00 AM</span><span>Beginner Batch A (8 students)</span></div>
+                                <div class="dash-schedule-item"><span class="dash-time">2:00 PM</span><span>Intermediate Batch (12 students)</span></div>
+                                <div class="dash-schedule-item"><span class="dash-time">6:00 PM</span><span>Kanji Workshop (6 students)</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="dashboard-wrapper" style="display:none;">
+            <nav class="dashboard-navbar admin-navbar">
+                <div class="dashboard-brand">Nihongo<span>Master</span> <span class="dashboard-role-badge admin-badge">Admin Panel</span></div>
+                <div class="dashboard-nav-right">
+                    <div class="dashboard-avatar admin-av" id="adminAvatar">A</div>
+                    <span id="adminName">Admin</span>
+                    <button class="dashboard-logout-btn" id="adminLogout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </nav>
+            <div class="dashboard-body">
+                <div class="dashboard-sidebar admin-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="#" class="sidebar-item active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-users"></i> All Users</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-graduation-cap"></i> Students</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-book"></i> Courses</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-money-bill"></i> Payments</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-chart-pie"></i> Analytics</a>
+                        <a href="#" class="sidebar-item"><i class="fas fa-cog"></i> Settings</a>
+                    </div>
+                </div>
+                <div class="dashboard-main">
+                    <div class="dashboard-welcome admin-welcome">
+                        <div>
+                            <h2>管理者 (Kanrisha)! 🛡️</h2>
+                            <p>Platform overview and management</p>
+                        </div>
+                        <div class="dashboard-kanji-deco">管</div>
+                    </div>
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#E63946;">
+                                <div class="dash-stat-icon"><i class="fas fa-user-graduate"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">156</div>
+                                    <div class="dash-stat-label">Total Students</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#FFD166;">
+                                <div class="dash-stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">8</div>
+                                    <div class="dash-stat-label">Teachers</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#06D6A0;">
+                                <div class="dash-stat-icon"><i class="fas fa-book"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">12</div>
+                                    <div class="dash-stat-label">Active Courses</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="dash-stat-card" style="--card-color:#118AB2;">
+                                <div class="dash-stat-icon"><i class="fas fa-taka-sign"></i></div>
+                                <div class="dash-stat-info">
+                                    <div class="dash-stat-num">৳1.2L</div>
+                                    <div class="dash-stat-label">Monthly Revenue</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="dash-card">
+                                <div class="dash-card-header"><i class="fas fa-users me-2"></i>Recent Enrollments</div>
+                                <div class="dash-table-wrap">
+                                    <table class="dash-table">
+                                        <thead><tr><th>Student</th><th>Course</th><th>Date</th><th>Status</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Karim Ahmed</td><td>Beginner Japanese</td><td>Feb 20</td><td><span class="dash-badge-active">Active</span></td></tr>
+                                            <tr><td>Nadia Islam</td><td>Intermediate</td><td>Feb 19</td><td><span class="dash-badge-active">Active</span></td></tr>
+                                            <tr><td>Rakib Hasan</td><td>Conversational</td><td>Feb 18</td><td><span class="dash-badge-pending">Pending</span></td></tr>
+                                            <tr><td>Sadia Rahman</td><td>Beginner Japanese</td><td>Feb 17</td><td><span class="dash-badge-active">Active</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="dash-card">
+                                <div class="dash-card-header"><i class="fas fa-bolt me-2"></i>Quick Actions</div>
+                                <div class="dash-quick-action"><i class="fas fa-user-plus"></i> Add New Student</div>
+                                <div class="dash-quick-action"><i class="fas fa-plus-circle"></i> Create New Course</div>
+                                <div class="dash-quick-action"><i class="fas fa-bell"></i> Send Announcement</div>
+                                <div class="dash-quick-action"><i class="fas fa-file-export"></i> Export Reports</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/app.js"></script>
-
 </body>
-
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --deep-navy: #1A2B3C;
@@ -24,7 +27,13 @@
             --medium-gray: #E0E0E0;
             --dark-gray: #333333;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             color: var(--dark-gray);
@@ -32,157 +41,1728 @@
             overflow-x: hidden;
             position: relative;
         }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 600; }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
 
         /* scroll progress bar */
         .scroll-progress {
-            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
             background: linear-gradient(to right, var(--japanese-red), var(--soft-gold));
-            z-index: 10001; transition: width 0.1s ease;
+            z-index: 10001;
+            transition: width 0.1s ease;
         }
+
         /* custom cursor (light version) */
-        .cursor-dot { width: 8px; height: 8px; background-color: var(--japanese-red); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: opacity 0.3s ease; }
-        .cursor-border { width: 40px; height: 40px; border: 2px solid var(--soft-gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: all 0.2s ease; }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--japanese-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .cursor-border {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--soft-gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease;
+        }
+
         /* scrollbar */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--light-gray); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--japanese-red), var(--deep-navy)); border-radius: 10px; }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--japanese-red), var(--deep-navy));
+            border-radius: 10px;
+        }
+
+        /* =====================================================
+   AUTH MODALS - Beautiful Two-Panel Design
+   ===================================================== */
+        .auth-modal-dialog {
+            max-width: 820px;
+            margin: 20px auto;
+        }
+
+        .auth-modal-dialog-lg {
+            max-width: 920px;
+        }
+
+        .auth-modal-content {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+            min-height: 520px;
+            position: relative;
+        }
+
+        .auth-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .auth-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Left Decorative Panel */
+        .auth-panel-left {
+            width: 260px;
+            min-width: 260px;
+            background: linear-gradient(155deg, var(--japanese-red) 0%, #7d0000 100%);
+            padding: 40px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .signup-panel {
+            background: linear-gradient(155deg, #1A2B3C 0%, #0d1b2a 100%);
+            justify-content: flex-start;
+            padding-top: 50px;
+        }
+
+        .auth-panel-kanji {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            font-size: 9rem;
+            color: rgba(255, 255, 255, 0.06);
+            font-family: 'MS Mincho', serif;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .auth-panel-sakura {
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            font-size: 5rem;
+            opacity: 0.12;
+            user-select: none;
+        }
+
+        .auth-role-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .signup-icon {
+            background: rgba(230, 57, 70, 0.3);
+            border-color: rgba(230, 57, 70, 0.5);
+        }
+
+        .auth-panel-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-panel-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-role-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-panel-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-panel-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .auth-panel-dots span:first-child {
+            background: rgba(255, 255, 255, 0.8);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .auth-side-features {
+            margin-top: 25px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-side-feature {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.82rem;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        .auth-side-feature i {
+            color: #06D6A0;
+            margin-right: 8px;
+        }
+
+        /* Right Form Panel */
+        .auth-panel-right {
+            flex: 1;
+            padding: 40px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: white;
+        }
+
+        .auth-panel-right-scroll {
+            overflow-y: auto;
+            max-height: 90vh;
+            justify-content: flex-start;
+            padding-top: 30px;
+        }
+
+        .auth-form-header {
+            margin-bottom: 24px;
+        }
+
+        .auth-form-header h4 {
+            font-size: 1.6rem;
+            color: var(--deep-navy);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .auth-form-header p {
+            color: #999;
+            font-size: 0.88rem;
+        }
+
+        /* Input Groups */
+        .auth-input-group {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .auth-input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bbb;
+            font-size: 0.9rem;
+            z-index: 2;
+            transition: color 0.3s;
+        }
+
+        .auth-input {
+            width: 100%;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 12px 14px 12px 40px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+            color: #333;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .auth-input:focus {
+            border-color: var(--japanese-red);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.08);
+        }
+
+        .auth-input:focus~.auth-input-icon,
+        .auth-input-group:focus-within .auth-input-icon {
+            color: var(--japanese-red);
+        }
+
+        .auth-input-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bbb;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 2;
+        }
+
+        .auth-input-toggle:hover {
+            color: var(--japanese-red);
+        }
+
+        textarea.auth-input {
+            resize: none;
+            padding-top: 10px;
+        }
+
+        .auth-select {
+            width: 100%;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+            color: #333;
+            outline: none;
+            transition: all 0.3s;
+            appearance: auto;
+        }
+
+        .auth-select:focus {
+            border-color: var(--japanese-red);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.08);
+        }
+
+        /* Role Tabs */
+        .auth-role-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 18px;
+            background: #f5f5f5;
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .auth-role-tab {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 8px 6px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-role-tab.active {
+            background: var(--japanese-red);
+            color: white;
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .auth-role-tab i {
+            margin-right: 4px;
+        }
+
+        /* Role-specific fields */
+        .auth-role-fields {
+            background: #fff8f8;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 14px;
+            border-left: 3px solid var(--japanese-red);
+        }
+
+        .auth-role-fields-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--japanese-red);
+            margin-bottom: 10px;
+        }
+
+        /* Remember row */
+        .auth-remember-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .auth-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .auth-checkbox-label input {
+            cursor: pointer;
+            accent-color: var(--japanese-red);
+        }
+
+        .auth-forgot-link {
+            font-size: 0.82rem;
+            color: var(--japanese-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit button */
+        .auth-submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--japanese-red) 0%, #c62828 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 13px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(230, 57, 70, 0.4);
+        }
+
+        .auth-submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Demo credentials */
+        .auth-demo-box {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 16px;
+            border: 1px dashed #ddd;
+            font-size: 0.78rem;
+        }
+
+        .auth-demo-title {
+            color: #888;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
+        .auth-demo-item {
+            color: #666;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        .auth-demo-role {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.72rem;
+            margin-right: 5px;
+        }
+
+        .auth-demo-role.student {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .auth-demo-role.teacher {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .auth-demo-role.admin {
+            background: #fce4ec;
+            color: #c62828;
+        }
+
+        .auth-switch-text {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .auth-switch-text a {
+            color: var(--japanese-red);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-switch-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive modal */
+        @media (max-width: 600px) {
+            .auth-panel-left {
+                display: none;
+            }
+
+            .auth-modal-dialog {
+                max-width: 96vw;
+                margin: 10px auto;
+            }
+
+            .auth-panel-right {
+                padding: 28px 20px;
+            }
+        }
+
+        /* =====================================================
+   3D CARD ANIMATIONS
+   ===================================================== */
+        .course-cards-3d {
+            perspective: 1200px;
+        }
+
+        .course-card {
+            background-color: var(--pure-white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.4s ease, transform 0.1s ease;
+            height: 100%;
+            border-top: 5px solid var(--japanese-red);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 20px 50px rgba(230, 57, 70, 0.2), 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .course-card .card-3d-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 16px;
+            z-index: 5;
+        }
+
+        .course-card:hover .card-3d-shine {
+            opacity: 1;
+        }
+
+        .course-card .course-header {
+            position: relative;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+            color: var(--pure-white);
+            padding: 25px 20px;
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 30px 20px;
+            text-align: center;
+            height: 100%;
+            transition: box-shadow 0.4s ease, background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Floating animation for course cards */
+        @keyframes floatUp {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* =====================================================
+   DASHBOARD STYLES
+   ===================================================== */
+        .dashboard-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 99999;
+            background: #f0f2f5;
+        }
+
+        .dashboard-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-navbar {
+            background: var(--deep-navy);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .teacher-navbar {
+            background: #1a3a2a;
+        }
+
+        .admin-navbar {
+            background: #2a1a2e;
+        }
+
+        .dashboard-brand {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dashboard-brand span:first-child {
+            color: var(--japanese-red);
+        }
+
+        .dashboard-role-badge {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .student-badge {
+            background: rgba(230, 57, 70, 0.2);
+            color: #ff8a80;
+        }
+
+        .teacher-badge {
+            background: rgba(6, 214, 160, 0.2);
+            color: #80ffcf;
+        }
+
+        .admin-badge {
+            background: rgba(187, 134, 252, 0.2);
+            color: #cf9fff;
+        }
+
+        .dashboard-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--japanese-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .teacher-av {
+            background: #2D6A4F;
+        }
+
+        .admin-av {
+            background: #7209B7;
+        }
+
+        .dashboard-logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dashboard-logout-btn:hover {
+            background: rgba(230, 57, 70, 0.3);
+            color: white;
+        }
+
+        .dashboard-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .dashboard-sidebar {
+            width: 220px;
+            min-width: 220px;
+            background: white;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.05);
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .teacher-sidebar {
+            background: #f8fff8;
+        }
+
+        .admin-sidebar {
+            background: #fdf8ff;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-item i {
+            width: 18px;
+            text-align: center;
+        }
+
+        .sidebar-item:hover {
+            color: var(--japanese-red);
+            background: #fff8f8;
+        }
+
+        .sidebar-item.active {
+            color: var(--japanese-red);
+            background: #fff0f0;
+            border-left-color: var(--japanese-red);
+            font-weight: 600;
+        }
+
+        .dashboard-main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 24px;
+        }
+
+        .dashboard-welcome {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
+            border-radius: 16px;
+            padding: 24px 28px;
+            color: white;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teacher-welcome {
+            background: linear-gradient(135deg, #1a3a2a 0%, #2d6a4f 100%);
+        }
+
+        .admin-welcome {
+            background: linear-gradient(135deg, #2a1a2e 0%, #6a1a7a 100%);
+        }
+
+        .dashboard-welcome h2 {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .dashboard-welcome p {
+            opacity: 0.7;
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        .dashboard-kanji-deco {
+            font-size: 6rem;
+            font-family: 'MS Mincho', serif;
+            color: rgba(255, 255, 255, 0.06);
+            line-height: 1;
+            user-select: none;
+        }
+
+        /* Stat Cards */
+        .dash-stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid var(--card-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dash-stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .dash-stat-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--card-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .dash-stat-num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--deep-navy);
+            line-height: 1;
+        }
+
+        .dash-stat-label {
+            font-size: 0.78rem;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        /* Dash Cards */
+        .dash-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            height: 100%;
+        }
+
+        .dash-card-header {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--deep-navy);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        .dash-course-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .dash-course-item:last-child {
+            border-bottom: none;
+        }
+
+        .dash-course-icon {
+            font-size: 2rem;
+        }
+
+        .dash-course-info {
+            flex: 1;
+        }
+
+        .dash-course-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+
+        .dash-schedule-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #f5f5f5;
+            align-items: center;
+        }
+
+        .dash-schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .dash-time {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--japanese-red);
+        }
+
+        .dash-student-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 0.85rem;
+        }
+
+        .dash-student-item:last-child {
+            border-bottom: none;
+        }
+
+        .dash-student-av {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .dash-student-item> :nth-child(3) {
+            margin-left: auto;
+        }
+
+        .dash-badge-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .dash-badge-pending {
+            background: #fff8e1;
+            color: #f57f17;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .dash-table-wrap {
+            overflow-x: auto;
+        }
+
+        .dash-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.83rem;
+        }
+
+        .dash-table th {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            text-align: left;
+            font-size: 0.78rem;
+            color: #999;
+            border-bottom: 2px solid #eee;
+        }
+
+        .dash-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f5f5f5;
+            vertical-align: middle;
+        }
+
+        .dash-quick-action {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 6px;
+            border: 1px solid #eee;
+        }
+
+        .dash-quick-action:hover {
+            background: #fff0f0;
+            color: var(--japanese-red);
+            border-color: rgba(230, 57, 70, 0.2);
+        }
+
+        .dash-quick-action i {
+            color: var(--japanese-red);
+            width: 18px;
+            text-align: center;
+        }
+
+        /* Dashboard responsive */
+        @media (max-width: 768px) {
+            .dashboard-sidebar {
+                display: none;
+            }
+
+            .dashboard-main {
+                padding: 16px;
+            }
+        }
 
         /* navbar */
         .navbar {
-            background-color: var(--deep-navy); padding: 15px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.3s ease;
+            background-color: var(--deep-navy);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-        .navbar-brand { font-weight: 700; font-size: 28px; color: var(--pure-white) !important; }
-        .navbar-brand span { color: var(--japanese-red); }
-        .nav-link { color: var(--pure-white) !important; font-weight: 500; margin: 0 10px; transition: color 0.3s ease; }
-        .nav-link:hover, .nav-link.active { color: var(--soft-gold) !important; }
-        .navbar-scrolled { padding: 10px 0; background-color: rgba(26,43,60,0.95); backdrop-filter: blur(5px); }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--pure-white) !important;
+        }
+
+        .navbar-brand span {
+            color: var(--japanese-red);
+        }
+
+        .nav-link {
+            color: var(--pure-white) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--soft-gold) !important;
+        }
+
+        .navbar-scrolled {
+            padding: 10px 0;
+            background-color: rgba(26, 43, 60, 0.95);
+            backdrop-filter: blur(5px);
+        }
 
         /* page header */
         .page-header {
             background: linear-gradient(135deg, var(--deep-navy) 0%, #2c3e50 100%);
-            color: var(--pure-white); padding: 140px 0 70px; text-align: center;
-            position: relative; overflow: hidden;
+            color: var(--pure-white);
+            padding: 140px 0 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .page-header h1 { font-size: 3.2rem; font-weight: 700; margin-bottom: 15px; }
-        .page-header .subhead { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
-        .japanese-bg-element { position: absolute; opacity: 0.1; z-index: 1; font-size: 8rem; }
-        .sakura-left { top: 15%; left: 2%; color: var(--sakura-pink); }
-        .sakura-right { bottom: 10%; right: 4%; color: var(--sakura-pink); transform: rotate(15deg); }
-        .kanji-bg { top: 25%; right: 8%; font-size: 10rem; color: var(--soft-gold); font-family: 'MS Mincho', serif; content: "選"; }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .page-header .subhead {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .japanese-bg-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 1;
+            font-size: 8rem;
+        }
+
+        .sakura-left {
+            top: 15%;
+            left: 2%;
+            color: var(--sakura-pink);
+        }
+
+        .sakura-right {
+            bottom: 10%;
+            right: 4%;
+            color: var(--sakura-pink);
+            transform: rotate(15deg);
+        }
+
+        .kanji-bg {
+            top: 25%;
+            right: 8%;
+            font-size: 10rem;
+            color: var(--soft-gold);
+            font-family: 'MS Mincho', serif;
+            content: "選";
+        }
 
         /* why us cards / features */
         .feature-block {
             padding: 70px 0;
         }
+
         .feature-card-large {
-            background: white; border-radius: 30px; padding: 35px 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05); height: 100%;
-            transition: all 0.3s ease; border-bottom: 6px solid transparent;
-            border-image: linear-gradient(90deg, var(--japanese-red), var(--soft-gold)); border-image-slice: 1;
+            background: white;
+            border-radius: 30px;
+            padding: 35px 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: all 0.3s ease;
+            border-bottom: 6px solid transparent;
+            border-image: linear-gradient(90deg, var(--japanese-red), var(--soft-gold));
+            border-image-slice: 1;
         }
+
         .feature-card-large:hover {
-            transform: translateY(-12px); box-shadow: 0 25px 45px rgba(230,57,70,0.12);
+            transform: translateY(-12px);
+            box-shadow: 0 25px 45px rgba(230, 57, 70, 0.12);
         }
+
         .feature-icon-lg {
-            width: 80px; height: 80px; background: var(--light-gray); border-radius: 20px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
-            font-size: 2.5rem; color: var(--japanese-red); transition: 0.3s;
+            width: 80px;
+            height: 80px;
+            background: var(--light-gray);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 2.5rem;
+            color: var(--japanese-red);
+            transition: 0.3s;
         }
+
         .feature-card-large:hover .feature-icon-lg {
-            background: var(--japanese-red); color: white;
+            background: var(--japanese-red);
+            color: white;
         }
-        .feature-title { font-size: 1.7rem; margin-bottom: 15px; }
+
+        .feature-title {
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+        }
 
         /* comparison table */
         .comparison-section {
-            background-color: var(--light-gray); padding: 70px 0;
+            background-color: var(--light-gray);
+            padding: 70px 0;
         }
+
         .comp-card {
-            background: white; border-radius: 24px; padding: 30px 25px; height: 100%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            background: white;
+            border-radius: 24px;
+            padding: 30px 25px;
+            height: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
         }
+
         .comp-card.ours {
             border-top: 8px solid var(--japanese-red);
         }
+
         .comp-card.others {
-            border-top: 8px solid #aaa; opacity: 0.8;
+            border-top: 8px solid #aaa;
+            opacity: 0.8;
         }
-        .check-yes { color: #2ecc71; font-weight: 600; }
-        .check-no { color: #e74c3c; }
-        .comp-list { list-style: none; padding: 0; }
-        .comp-list li { margin-bottom: 18px; font-size: 1.1rem; border-bottom: 1px dashed #eee; padding-bottom: 8px; }
+
+        .check-yes {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+
+        .check-no {
+            color: #e74c3c;
+        }
+
+        .comp-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comp-list li {
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 8px;
+        }
 
         /* numbers / stats */
         .stats-section {
-            background: var(--deep-navy); color: white; padding: 50px 0;
+            background: var(--deep-navy);
+            color: white;
+            padding: 50px 0;
         }
-        .stat-item { text-align: center; }
-        .stat-number { font-size: 3.2rem; font-weight: 700; color: var(--soft-gold); line-height: 1.2; }
-        .stat-label { font-size: 1.1rem; opacity: 0.8; }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--soft-gold);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
 
         /* usp detailed grid */
-        .usp-detailed { padding: 70px 0; }
+        .usp-detailed {
+            padding: 70px 0;
+        }
+
         .usp-mini-card {
-            background: white; border-radius: 20px; padding: 25px; height: 100%;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.03);
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            height: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.03);
             transition: 0.2s;
         }
-        .usp-mini-card:hover { border-color: var(--soft-gold); }
-        .usp-mini-icon { color: var(--japanese-red); font-size: 2rem; margin-bottom: 15px; }
+
+        .usp-mini-card:hover {
+            border-color: var(--soft-gold);
+        }
+
+        .usp-mini-icon {
+            color: var(--japanese-red);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
 
         /* cta banner */
         .cta-banner {
             background: linear-gradient(145deg, #fff5f0, #ffffff);
-            border-radius: 40px; padding: 55px 40px; margin: 40px 0;
+            border-radius: 40px;
+            padding: 55px 40px;
+            margin: 40px 0;
             border: 1px solid var(--sakura-pink);
             text-align: center;
         }
+
         .btn-custom {
-            background: var(--japanese-red); color: white; border-radius: 50px;
-            padding: 14px 45px; font-weight: 600; font-size: 1.2rem;
-            border: none; transition: 0.3s; display: inline-block; text-decoration: none;
+            background: var(--japanese-red);
+            color: white;
+            border-radius: 50px;
+            padding: 14px 45px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border: none;
+            transition: 0.3s;
+            display: inline-block;
+            text-decoration: none;
         }
-        .btn-custom:hover { background: var(--deep-navy); color: white; transform: translateY(-4px); box-shadow: 0 12px 25px rgba(230,57,70,0.4); }
+
+        .btn-custom:hover {
+            background: var(--deep-navy);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(230, 57, 70, 0.4);
+        }
 
         /* footer */
         footer {
-            background-color: var(--deep-navy); color: var(--pure-white);
-            padding: 50px 0 30px; margin-top: 60px;
+            background-color: var(--deep-navy);
+            color: var(--pure-white);
+            padding: 50px 0 30px;
+            margin-top: 60px;
         }
-        .footer-logo { font-size: 2rem; font-weight: 700; color: var(--pure-white); }
-        .footer-logo span { color: var(--japanese-red); }
-        .footer-link { color: rgba(255,255,255,0.7); text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s; }
-        .footer-link:hover { color: var(--soft-gold); }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--pure-white);
+        }
+
+        .footer-logo span {
+            color: var(--japanese-red);
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--soft-gold);
+        }
+
         .social-icon {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%;
-            color: white; margin-right: 8px; transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            margin-right: 8px;
+            transition: 0.3s;
         }
-        .social-icon:hover { background: var(--japanese-red); transform: translateY(-4px); }
+
+        .social-icon:hover {
+            background: var(--japanese-red);
+            transform: translateY(-4px);
+        }
 
         /* back to top */
         .back-to-top {
-            position: fixed; bottom: 30px; right: 30px; z-index: 99;
-            width: 55px; height: 55px; border-radius: 50%; background: var(--japanese-red);
-            color: white; display: flex; align-items: center; justify-content: center;
-            font-size: 1.6rem; box-shadow: 0 6px 15px rgba(230,57,70,0.3); transition: 0.3s; cursor: pointer;
-            border: none; opacity: 0; visibility: hidden;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--japanese-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 6px 15px rgba(230, 57, 70, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            opacity: 0;
+            visibility: hidden;
         }
-        .back-to-top.active { opacity: 1; visibility: visible; }
-        .back-to-top:hover { background: var(--deep-navy); transform: translateY(-5px); }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--deep-navy);
+            transform: translateY(-5px);
+        }
 
         @media (max-width: 768px) {
-            .page-header h1 { font-size: 2.5rem; }
+
+            .cursor-dot,
+            .cursor-border {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .cursor-dot,
+            .cursor-border {
+                display: none;
+            }
+
+            .page-header {
+                padding: 120px 0 60px;
+            }
+
+            .btn-custom {
+                display: inline-block;
+                padding: 12px 30px;
+                margin-bottom: 10px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
+
 <body>
-    <!-- progress & cursor -->
+    <!-- Scroll Progress Bar -->
     <div class="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
     <div class="cursor-border"></div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered auth-modal-dialog">
+            <div class="modal-content auth-modal-content">
+                <button type="button" class="auth-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <!-- Left Decorative Panel -->
+                <div class="auth-panel-left" id="loginPanelLeft">
+                    <div class="auth-panel-kanji">日</div>
+                    <div class="auth-panel-sakura">🌸</div>
+                    <div class="auth-role-icon" id="loginRoleIcon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="auth-panel-title">Welcome Back!</h3>
+                    <p class="auth-panel-subtitle">Login as</p>
+                    <div class="auth-role-badge" id="loginRoleBadge">Student</div>
+                    <div class="auth-panel-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <!-- Right Form Panel -->
+                <div class="auth-panel-right">
+                    <div class="auth-form-header">
+                        <h4>Sign In</h4>
+                        <p>Enter your credentials to continue</p>
+                    </div>
+                    <form id="loginForm">
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="auth-input" id="loginEmail" placeholder="Email Address" required>
+                        </div>
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="auth-input" id="loginPassword" placeholder="Password"
+                                required>
+                            <span class="auth-input-toggle" onclick="togglePassword('loginPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                        <div class="auth-remember-row">
+                            <label class="auth-checkbox-label">
+                                <input type="checkbox" id="rememberMe">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="auth-forgot-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="auth-submit-btn">
+                            <span>Login</span> <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+                    <!-- Demo Credentials -->
+                    <div class="auth-demo-box">
+                        <div class="auth-demo-title"><i class="fas fa-info-circle me-1"></i> Demo Credentials</div>
+                        <div class="auth-demo-item"><span class="auth-demo-role student">Student</span>
+                            student@example.com / student123</div>
+                        <div class="auth-demo-item"><span class="auth-demo-role teacher">Teacher</span>
+                            teacher@example.com / teacher123</div>
+                        <div class="auth-demo-item"><span class="auth-demo-role admin">Admin</span> admin@example.com /
+                            admin123</div>
+                    </div>
+                    <div class="auth-switch-text">
+                        Don't have an account?
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign
+                            Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden role tracker for JS compatibility -->
+    <span id="selectedRole" style="display:none">Student</span>
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered auth-modal-dialog auth-modal-dialog-lg">
+            <div class="modal-content auth-modal-content">
+                <button type="button" class="auth-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <!-- Left Decorative Panel -->
+                <div class="auth-panel-left signup-panel">
+                    <div class="auth-panel-kanji">語</div>
+                    <div class="auth-panel-sakura">🌸</div>
+                    <div class="auth-role-icon signup-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="auth-panel-title">Join Us!</h3>
+                    <p class="auth-panel-subtitle">Start your Japanese journey today</p>
+                    <div class="auth-panel-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="auth-side-features">
+                        <div class="auth-side-feature"><i class="fas fa-check-circle"></i> Free Trial Class</div>
+                        <div class="auth-side-feature"><i class="fas fa-check-circle"></i> Expert Instructors</div>
+                        <div class="auth-side-feature"><i class="fas fa-check-circle"></i> Certificate Awarded</div>
+                    </div>
+                </div>
+                <!-- Right Form Panel -->
+                <div class="auth-panel-right auth-panel-right-scroll">
+                    <div class="auth-form-header">
+                        <h4>Create Account</h4>
+                        <p>Fill in your details to get started</p>
+                    </div>
+                    <form id="signupForm">
+                        <!-- Role Tabs -->
+                        <div class="auth-role-tabs">
+                            <button type="button" class="auth-role-tab active" data-role="student">
+                                <i class="fas fa-graduation-cap"></i> Student
+                            </button>
+                            <button type="button" class="auth-role-tab" data-role="teacher">
+                                <i class="fas fa-chalkboard-teacher"></i> Teacher
+                            </button>
+                            <button type="button" class="auth-role-tab" data-role="admin">
+                                <i class="fas fa-user-shield"></i> Admin
+                            </button>
+                        </div>
+                        <select class="d-none" id="signupRole" required>
+                            <option value="student" selected>Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Admin</option>
+                        </select>
+
+                        <div class="row g-2 mb-0">
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="auth-input" id="firstName" placeholder="First Name"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="auth-input" id="lastName" placeholder="Last Name"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="auth-input" id="signupEmail" placeholder="Email Address"
+                                required>
+                        </div>
+                        <div class="auth-input-group">
+                            <span class="auth-input-icon"><i class="fas fa-phone"></i></span>
+                            <input type="tel" class="auth-input" id="signupPhone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="row g-2 mb-0">
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="auth-input" id="signupPassword" placeholder="Password"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="auth-input-group">
+                                    <span class="auth-input-icon"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="auth-input" id="confirmPassword"
+                                        placeholder="Confirm Password" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Student-specific fields -->
+                        <div id="studentFields" class="auth-role-fields">
+                            <div class="auth-role-fields-label"><i class="fas fa-graduation-cap me-1"></i> Student
+                                Details</div>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <select class="auth-select" id="studentLevel">
+                                        <option value="beginner">Beginner (No experience)</option>
+                                        <option value="beginner2">Some Hiragana/Katakana</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced (JLPT N3+)</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select class="auth-select" id="studentCourse">
+                                        <option value="beginner">Beginner Japanese</option>
+                                        <option value="intermediate">Intermediate Japanese</option>
+                                        <option value="advanced">Conversational Mastery</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Teacher-specific fields -->
+                        <div id="teacherFields" class="auth-role-fields" style="display:none">
+                            <div class="auth-role-fields-label"><i class="fas fa-chalkboard-teacher me-1"></i> Teacher
+                                Details</div>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="auth-input-group mb-0">
+                                        <span class="auth-input-icon"><i class="fas fa-certificate"></i></span>
+                                        <input type="text" class="auth-input" id="teacherQualification"
+                                            placeholder="Qualification (e.g. JLPT N1)">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <select class="auth-select" id="teacherSpecialization">
+                                        <option value="beginner">Beginner Level</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                        <option value="jlpt">JLPT Prep</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="auth-input-group mt-2">
+                                <span class="auth-input-icon" style="top:12px"><i class="fas fa-pen"></i></span>
+                                <textarea class="auth-input" id="teacherBio" rows="2"
+                                    placeholder="Short bio about your teaching experience..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Admin-specific fields -->
+                        <div id="adminFields" class="auth-role-fields" style="display:none">
+                            <div class="auth-role-fields-label"><i class="fas fa-user-shield me-1"></i> Admin Details
+                            </div>
+                            <div class="auth-input-group">
+                                <span class="auth-input-icon"><i class="fas fa-building"></i></span>
+                                <input type="text" class="auth-input" id="adminDepartment" value="Administration"
+                                    readonly>
+                            </div>
+                            <small class="text-muted d-block mt-1 mb-2">Admin accounts require approval from super
+                                admin</small>
+                        </div>
+
+                        <label class="auth-checkbox-label mt-2">
+                            <input type="checkbox" id="termsAgree" required>
+                            <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                        </label>
+                        <button type="submit" class="auth-submit-btn mt-2">
+                            <span>Create Account</span> <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+                    <div class="auth-switch-text">
+                        Already have an account?
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                            data-bs-dismiss="modal">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- navbar (same as home, with active state) -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -193,14 +1773,50 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="sensei.html">About Sensei</a></li>
-                    <li class="nav-item"><a class="nav-link" href="courses.html">Courses</a></li>
-                    <li class="nav-item"><a class="nav-link" href="class-system.html">Class System</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="why-us.html">Why Choose Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="exams.html">Exams</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#enroll">Enroll</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user-circle"></i> Login</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sensei.html">About Sensei</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="class-system.html">Class System</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="why-us.html">Why Choose Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="exams.html">Exams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="enroll.html">Enroll</a>
+                    </li>
+                    <!-- Login Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i> Login
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+                            <li>
+                                <h6 class="dropdown-header">Login as</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="student"><i class="fas fa-graduation-cap me-2"></i>Student</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="teacher"><i class="fas fa-chalkboard-teacher me-2"></i>Teacher</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                    data-role="admin"><i class="fas fa-user-shield me-2"></i>Admin</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#signupModal"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -213,7 +1829,8 @@
         <div class="japanese-bg-element kanji-bg">選</div>
         <div class="container position-relative" style="z-index:3;">
             <h1>Why Nihongo Master?</h1>
-            <div class="subhead">Discover what makes our approach different — and why hundreds of students trust us for their Japanese journey.</div>
+            <div class="subhead">Discover what makes our approach different — and why hundreds of students trust us for
+                their Japanese journey.</div>
         </div>
     </div>
 
@@ -225,21 +1842,24 @@
                     <div class="feature-card-large">
                         <div class="feature-icon-lg"><i class="fas fa-person-chalkboard"></i></div>
                         <h3 class="feature-title">Live & Interactive</h3>
-                        <p>No pre-recorded robots. Every class is live with Sensei, real-time Q&A, and speaking practice from day one. You'll be heard, corrected, and encouraged.</p>
+                        <p>No pre-recorded robots. Every class is live with Sensei, real-time Q&A, and speaking practice
+                            from day one. You'll be heard, corrected, and encouraged.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="feature-card-large">
                         <div class="feature-icon-lg"><i class="fas fa-leaf"></i></div>
                         <h3 class="feature-title">Culturally Immersive</h3>
-                        <p>Language lives in culture. We teach you 敬語 (keigo), 和の心, and practical etiquette — so you can navigate Japan authentically, not just pass tests.</p>
+                        <p>Language lives in culture. We teach you 敬語 (keigo), 和の心, and practical etiquette — so you can
+                            navigate Japan authentically, not just pass tests.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="feature-card-large">
                         <div class="feature-icon-lg"><i class="fas fa-chart-simple"></i></div>
                         <h3 class="feature-title">Trackable Progress</h3>
-                        <p>Weekly assignments, personalized feedback, and chapter tests. You’ll always know your weak points and exactly how to improve. No guesswork.</p>
+                        <p>Weekly assignments, personalized feedback, and chapter tests. You’ll always know your weak
+                            points and exactly how to improve. No guesswork.</p>
                     </div>
                 </div>
             </div>
@@ -285,9 +1905,11 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="comp-card ours">
-                        <h3 class="mb-4" style="color: var(--japanese-red);"><i class="fas fa-check-circle me-2"></i>Nihongo Master</h3>
+                        <h3 class="mb-4" style="color: var(--japanese-red);"><i
+                                class="fas fa-check-circle me-2"></i>Nihongo Master</h3>
                         <ul class="comp-list">
-                            <li><i class="fas fa-check-circle check-yes me-2"></i> Live classes with real instructor</li>
+                            <li><i class="fas fa-check-circle check-yes me-2"></i> Live classes with real instructor
+                            </li>
                             <li><i class="fas fa-check-circle check-yes me-2"></i> Personalized feedback every week</li>
                             <li><i class="fas fa-check-circle check-yes me-2"></i> Cultural workshops & 生の日本語</li>
                             <li><i class="fas fa-check-circle check-yes me-2"></i> Small batches (max 10 students)</li>
@@ -299,11 +1921,15 @@
                 </div>
                 <div class="col-md-6">
                     <div class="comp-card others">
-                        <h3 class="mb-4" style="color: #777;"><i class="fas fa-times-circle me-2"></i>Typical online courses / apps</h3>
+                        <h3 class="mb-4" style="color: #777;"><i class="fas fa-times-circle me-2"></i>Typical online
+                            courses / apps</h3>
                         <ul class="comp-list">
-                            <li><i class="fas fa-times-circle check-no me-2"></i> Mostly pre-recorded or AI chatbots</li>
-                            <li><i class="fas fa-times-circle check-no me-2"></i> No individual feedback (automated)</li>
-                            <li><i class="fas fa-check-circle check-yes me-2"></i> Some cultural notes (surface level)</li>
+                            <li><i class="fas fa-times-circle check-no me-2"></i> Mostly pre-recorded or AI chatbots
+                            </li>
+                            <li><i class="fas fa-times-circle check-no me-2"></i> No individual feedback (automated)
+                            </li>
+                            <li><i class="fas fa-check-circle check-yes me-2"></i> Some cultural notes (surface level)
+                            </li>
                             <li><i class="fas fa-times-circle check-no me-2"></i> Large groups or self-paced</li>
                             <li><i class="fas fa-check-circle check-yes me-2"></i> Often only limited materials</li>
                             <li><i class="fas fa-times-circle check-no me-2"></i> Rarely have exam simulation</li>
@@ -324,42 +1950,48 @@
                     <div class="usp-mini-card">
                         <div class="usp-mini-icon"><i class="fas fa-landmark"></i></div>
                         <h4>Authentic Japanese Method</h4>
-                        <p class="text-muted">Curriculum designed with native educators, focusing on real-life communication, not just textbook grammar.</p>
+                        <p class="text-muted">Curriculum designed with native educators, focusing on real-life
+                            communication, not just textbook grammar.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="usp-mini-card">
                         <div class="usp-mini-icon"><i class="fas fa-user-graduate"></i></div>
                         <h4>Experienced Instructor</h4>
-                        <p class="text-muted">Sensei Ahmed: JLPT N1, Waseda graduate, 10+ years teaching, 5 years in Japan.</p>
+                        <p class="text-muted">Sensei Ahmed: JLPT N1, Waseda graduate, 10+ years teaching, 5 years in
+                            Japan.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="usp-mini-card">
                         <div class="usp-mini-icon"><i class="fas fa-home"></i></div>
                         <h4>Learn from Home</h4>
-                        <p class="text-muted">Flexible online classes via Zoom/Google Meet. No commute, learn in your comfortable environment.</p>
+                        <p class="text-muted">Flexible online classes via Zoom/Google Meet. No commute, learn in your
+                            comfortable environment.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="usp-mini-card">
                         <div class="usp-mini-icon"><i class="fas fa-comments"></i></div>
                         <h4>Spoken Practice Focus</h4>
-                        <p class="text-muted">Emphasis on conversational skills with weekly speaking sessions and individual feedback.</p>
+                        <p class="text-muted">Emphasis on conversational skills with weekly speaking sessions and
+                            individual feedback.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="usp-mini-card">
                         <div class="usp-mini-icon"><i class="fas fa-award"></i></div>
                         <h4>Certificate After Completion</h4>
-                        <p class="text-muted">Recognized certificate to validate your proficiency for employers or universities.</p>
+                        <p class="text-muted">Recognized certificate to validate your proficiency for employers or
+                            universities.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="usp-mini-card">
                         <div class="usp-mini-icon"><i class="fas fa-users"></i></div>
                         <h4>Small Class Sizes</h4>
-                        <p class="text-muted">Max 10 students per batch, ensuring personal attention and a supportive community.</p>
+                        <p class="text-muted">Max 10 students per batch, ensuring personal attention and a supportive
+                            community.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -395,21 +2027,26 @@
                 <div class="col-md-4">
                     <div class="p-4 bg-white rounded-4 h-100 shadow-sm">
                         <div class="stars mb-2" style="color: var(--soft-gold);">★★★★★</div>
-                        <p><i class="fas fa-quote-left me-1" style="color: var(--japanese-red);"></i> The small class size makes a huge difference. I get to speak in every session, and Sensei corrects my pronunciation gently.</p>
+                        <p><i class="fas fa-quote-left me-1" style="color: var(--japanese-red);"></i> The small class
+                            size makes a huge difference. I get to speak in every session, and Sensei corrects my
+                            pronunciation gently.</p>
                         <div class="mt-3 fw-bold">— Minhaj A.</div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="p-4 bg-white rounded-4 h-100 shadow-sm">
                         <div class="stars mb-2" style="color: var(--soft-gold);">★★★★★</div>
-                        <p><i class="fas fa-quote-left me-1" style="color: var(--japanese-red);"></i> I tried apps but never progressed. Here, the cultural insights and real conversations made everything click.</p>
+                        <p><i class="fas fa-quote-left me-1" style="color: var(--japanese-red);"></i> I tried apps but
+                            never progressed. Here, the cultural insights and real conversations made everything click.
+                        </p>
                         <div class="mt-3 fw-bold">— Nabila S.</div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="p-4 bg-white rounded-4 h-100 shadow-sm">
                         <div class="stars mb-2" style="color: var(--soft-gold);">★★★★★</div>
-                        <p><i class="fas fa-quote-left me-1" style="color: var(--japanese-red);"></i> The weekly assignments and feedback kept me on track. I passed N4 in 5 months!</p>
+                        <p><i class="fas fa-quote-left me-1" style="color: var(--japanese-red);"></i> The weekly
+                            assignments and feedback kept me on track. I passed N4 in 5 months!</p>
                         <div class="mt-3 fw-bold">— Tanvir H.</div>
                     </div>
                 </div>
@@ -421,9 +2058,11 @@
     <div class="container">
         <div class="cta-banner">
             <h2 class="mb-3" style="color: var(--deep-navy);">Still unsure? Try a free trial class.</h2>
-            <p class="lead mb-4">No commitment. Meet Sensei, experience the method, and feel the difference yourself.</p>
+            <p class="lead mb-4">No commitment. Meet Sensei, experience the method, and feel the difference yourself.
+            </p>
             <a href="index.html#enroll" class="btn-custom">🔴 無料トライアル</a>
-            <a href="courses.html" class="btn-custom" style="background: var(--deep-navy); margin-left: 15px;">View Courses</a>
+            <a href="courses.html" class="btn-custom" style="background: var(--deep-navy); margin-left: 15px;">View
+                Courses</a>
         </div>
     </div>
 
@@ -436,7 +2075,8 @@
             <div class="row">
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <div class="footer-logo">Nihongo<span>Master</span></div>
-                    <p>Learn authentic Japanese language and culture from experienced instructors in the comfort of your home.</p>
+                    <p>Learn authentic Japanese language and culture from experienced instructors in the comfort of your
+                        home.</p>
                     <div class="mt-3">
                         <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
@@ -473,7 +2113,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        (function() {
+        (function () {
             // progress bar
             const progressBar = document.querySelector('.scroll-progress');
             window.addEventListener('scroll', () => {
@@ -526,14 +2166,15 @@
             });
 
             // smooth scroll for footer links (to home sections)
-            $('a[href^="#"]').not('[href="#"]').click(function(e) {
+            $('a[href^="#"]').not('[href="#"]').click(function (e) {
                 e.preventDefault();
                 const target = $(this).attr('href');
-                if (target && target!=='#' && $(target).length) {
+                if (target && target !== '#' && $(target).length) {
                     $('html, body').animate({ scrollTop: $(target).offset().top - 80 }, 600);
                 }
             });
         })();
     </script>
 </body>
+
 </html>
